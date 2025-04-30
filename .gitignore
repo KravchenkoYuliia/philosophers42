@@ -1,3 +1,6 @@
 .*.swp
+philo/.*.swp
 a.out
+philo/philo
+philo/objects
 

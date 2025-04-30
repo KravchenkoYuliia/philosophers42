@@ -6,11 +6,17 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/04/30 14:23:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:43:20 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "philo.h"
 
 int	main(int ac, char** av)
 {
+	if (ac != 6)
+	{
+		write(2, "Write the correct arguments, please\n", 36);
+		return (-1);
+	}
 
 }
