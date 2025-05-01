@@ -6,12 +6,16 @@
 #    By: yukravch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/30 14:29:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/05/01 10:53:14 by yukravch         ###   ########.fr        #
+#    Updated: 2025/05/01 12:38:15 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
+
+
 CFLAGS = -Wall -Werror -Wextra -g3 -I $(INC_DIR)
+#CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g -pthread -g3 -I $(INC_DIR)
+#flags for a big number of threads that is impossible for valgrind
 
 all: $(NAME)
 	@echo "                      "
@@ -30,7 +34,7 @@ OBJ_DIR = objects
 INC_DIR = includes
 
 
-FILES = main.c utils.c
+FILES = main.c utils.c exit.c
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
