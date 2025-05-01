@@ -6,7 +6,7 @@
 #    By: yukravch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/30 14:29:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/05/01 10:11:02 by yukravch         ###   ########.fr        #
+#    Updated: 2025/05/01 10:53:14 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ OBJ_DIR = objects
 INC_DIR = includes
 
 
-FILES = main.c
+FILES = main.c utils.c
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 
@@ -47,7 +47,7 @@ $(info 1. number_of_philosophers)
 $(info 2. time_to_die)
 $(info 3. time_to_eat)
 $(info 4. time_to_sleep)
-$(info 5. [number_of_times_each_philosopher_must_eat])
+$(info 5. [number_of_times_each_philosopher_must_eat] - optional argument)
 $(info                                                              )
 
 
