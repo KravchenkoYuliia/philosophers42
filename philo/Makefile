@@ -6,7 +6,7 @@
 #    By: yukravch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/30 14:29:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/05/01 09:55:34 by yukravch         ###   ########.fr        #
+#    Updated: 2025/05/01 10:11:02 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,16 @@ NAME = philo
 CFLAGS = -Wall -Werror -Wextra -g3 -I $(INC_DIR)
 
 all: $(NAME)
-	@echo "./\___/\."
-	@echo "         "
-	@echo "( >^ -^<)"
-	@echo "         "
-	@echo "/ ⊃ 🌸"
-	@echo "✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨"
-
+	@echo "                      "
+	@echo "✨✨✨✨✨✨✨✨✨✨✨"
+	@echo "✨                  ✨"
+	@echo "✨    ./\___/\.     ✨"
+	@echo "✨                  ✨"
+	@echo "✨    ( >^ -^<)     ✨"
+	@echo "✨                  ✨"
+	@echo "✨    / ⊃ 🌸/       ✨"
+	@echo "✨                  ✨"
+	@echo "✨✨✨✨✨✨✨✨✨✨✨"
 
 SRC_DIR = sources
 OBJ_DIR = objects
@@ -45,7 +48,7 @@ $(info 2. time_to_die)
 $(info 3. time_to_eat)
 $(info 4. time_to_sleep)
 $(info 5. [number_of_times_each_philosopher_must_eat])
-$(info                                               )
+$(info                                                              )
 
 
 clean: 
