@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/01 10:34:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:07:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,16 @@ int	ft_atoi(const char *nptr)
 		str++;
 	}
 	return (result * sign);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
 }
