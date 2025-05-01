@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/01 12:25:01 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:28:10 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ int	ft_init(t_philo **philo, int ac, char **av);
 int	ft_philo(int ac, char **av);
 void	ft_error(char *msg, t_philo **philo);
 int	ft_strlen(char *str);
-
+int	ft_isdigit(int ac, char **av);
 # endif

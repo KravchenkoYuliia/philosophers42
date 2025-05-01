@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/01 12:07:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:41:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,3 +49,26 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
+
+int	ft_isdigit(int ac, char **av)
+{
+	int	arg;
+	int	i;
+
+	arg = 1;
+	while (av[arg] && arg < ac)
+	{
+		i = 0;
+		while (av[arg][i])
+		{
+			if(!(av[arg][i] >= '0' && av[arg][i] <= '9'))
+			{
+				return (1);
+			}
+			i++;
+		}
+		arg++;
+	}
+	return (0);
+}
+

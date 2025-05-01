@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/01 12:36:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:36:46 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -74,6 +74,12 @@ int	main(int ac, char** av)
 		ft_error("Write the correct number of arguments, please", NULL);
 		return (1);
 	}
+	if (ft_isdigit(ac, av) != 0)
+	{
+		ft_error("Only numbers are accepted as arguments", NULL);
+		return (1);
+	}
+
 	if (ft_philo(ac, av) == 1)
 		return (1);
 	return (0);
