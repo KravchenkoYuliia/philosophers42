@@ -1,8 +1,7 @@
 # philosophers42
 Basics of threading a process. Creating threads and exploring the use of mutexes
 
-
-
+![alt text](image.png)
 
 Here are the key things you need to know to succeed in this assignment:
 
