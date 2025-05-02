@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/01 14:36:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:54:59 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -33,26 +33,32 @@ int	ft_init(t_philo **philo, int ac, char **av)
 
 void	*ft_routine(void * philo)
 {
-	printf("Doing my routine\n");
-	free(philo);
+	t_philo *philo_2 = (t_philo *)philo;
+	printf("I'm philo #%zu doing my routine\n", (philo_2)->count_philo);
+	//pthread_exit(NULL);
 	return (NULL);
 }
 
 int	ft_create_philo(t_philo **philo)
 {
-	if (pthread_create(&(*philo)->philo, NULL, ft_routine, (void *)*philo) != 0)
-	{
-		ft_error("Failed to create thread", philo);
-		return (1);
+	(*philo)->count_philo = 0;
+	while ((*philo)->count_philo < (*philo)->nb_of_philo)
+	{	
+		if (pthread_create(&(*philo)->philo, NULL, ft_routine, (void *)philo) != 0)
+		{
+			ft_error("Failed to create thread", philo);
+			return (1);
+		}
+		if (pthread_join((*philo)->philo, NULL) != 0)
+		{
+			ft_error("Failed to join thread", philo);
+			pthread_exit(NULL);
+			return (1);
+		}
+		write(1, "Good\n", 5);
+		(*philo)->count_philo++;
 	}
-	if (pthread_join((*philo)->philo, NULL) != 0)
-	{
-		ft_error("Failed to join thread", philo);
-		pthread_exit(NULL);
-		return (1);
-	}
-	write(1, "Good\n", 5);
-	pthread_exit(NULL);
+	free(*philo);
 	return (0);
 }
 
@@ -76,10 +82,11 @@ int	main(int ac, char** av)
 	}
 	if (ft_isdigit(ac, av) != 0)
 	{
-		ft_error("Only numbers are accepted as arguments", NULL);
+		ft_error("Only positive numbers are accepted as arguments", NULL);
 		return (1);
 	}
-
+	if (ft_MAX(ac, av) != 0)
+		return (1);
 	if (ft_philo(ac, av) == 1)
 		return (1);
 	return (0);

@@ -6,36 +6,26 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/01 14:41:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:34:40 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *nptr)
+size_t	ft_atoi(char *str)
 {
-	char	*str;
-	int		result;
-	char	sign;
+	size_t		result;
 
 	result = 0;
-	sign = 1;
-	str = (char *)nptr;
 	while ((*str >= 9 && *str <= 13) || *str == ' ')
 		str++;
-	if (*str == '+' || *str == '-')
-	{
-		if (*str == '-')
-			sign *= -1;
-		str++;
-	}
 	while (*str >= '0' && *str <= '9')
 	{
 		result *= 10;
 		result += *str - '0';
 		str++;
 	}
-	return (result * sign);
+	return (result);
 }
 
 int	ft_strlen(char *str)
@@ -72,3 +62,42 @@ int	ft_isdigit(int ac, char **av)
 	return (0);
 }
 
+unsigned long long	ft_atoi_long(char *str)
+{
+	unsigned long long	result;
+
+	result = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	while (*str >= '0' && *str <= '9')
+	{
+		result *= 10;
+		result += *str - '0';
+		str++;
+	}
+	return (result);
+}
+
+int	ft_MAX(int ac, char **av)
+{
+	int	arg;
+	size_t	max_size_t;
+
+	if (ft_atoi(av[1]) > 200)
+	{
+		ft_error("Number of philosophers can't exceed 200", NULL);
+		return (1);
+	}
+	arg = 2;
+	max_size_t = 4294967295;
+	while (av[arg] && arg < ac)
+	{
+		if (ft_atoi_long(av[arg]) > max_size_t)
+		{
+			ft_error("Don't exceed the size_t max in arguments", NULL);
+			return (1);
+		}
+		arg++;
+	}
+	return (0);
+}
