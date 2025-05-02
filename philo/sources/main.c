@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/02 12:38:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:46:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -35,7 +35,6 @@ void	*ft_routine(void * philo)
 {
 	t_philo *philo_2 = (t_philo *)philo;
 	printf("I'm philo #%zu doing my routine\n", philo_2->count_philo);
-	//pthread_exit(NULL);
 	return (NULL);
 }
 
@@ -52,7 +51,6 @@ int	ft_create_philo(t_philo **philo)
 		if (pthread_join((*philo)->philo, NULL) != 0)
 		{
 			ft_error("Failed to join thread", philo);
-			pthread_exit(NULL);
 			return (1);
 		}
 		write(1, "Good\n", 5);
