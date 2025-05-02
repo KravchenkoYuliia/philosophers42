@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/02 11:54:59 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:38:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -34,17 +34,17 @@ int	ft_init(t_philo **philo, int ac, char **av)
 void	*ft_routine(void * philo)
 {
 	t_philo *philo_2 = (t_philo *)philo;
-	printf("I'm philo #%zu doing my routine\n", (philo_2)->count_philo);
+	printf("I'm philo #%zu doing my routine\n", philo_2->count_philo);
 	//pthread_exit(NULL);
 	return (NULL);
 }
 
 int	ft_create_philo(t_philo **philo)
 {
-	(*philo)->count_philo = 0;
-	while ((*philo)->count_philo < (*philo)->nb_of_philo)
+	(*philo)->count_philo = 1;
+	while ((*philo)->count_philo <= (*philo)->nb_of_philo)
 	{	
-		if (pthread_create(&(*philo)->philo, NULL, ft_routine, (void *)philo) != 0)
+		if (pthread_create(&(*philo)->philo, NULL, ft_routine, (void *)*philo) != 0)
 		{
 			ft_error("Failed to create thread", philo);
 			return (1);
