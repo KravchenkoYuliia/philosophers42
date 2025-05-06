@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/02 11:34:40 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:34:57 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,12 @@ int	ft_MAX(int ac, char **av)
 
 	if (ft_atoi(av[1]) > 200)
 	{
-		ft_error("Number of philosophers can't exceed 200", NULL);
+		ft_error("Number of philosophers can't exceed 200");
+		return (1);
+	}
+	if (ft_atoi(av[1]) == 0)
+	{
+		printf("Add at least one philosopher\n");
 		return (1);
 	}
 	arg = 2;
@@ -94,7 +99,7 @@ int	ft_MAX(int ac, char **av)
 	{
 		if (ft_atoi_long(av[arg]) > max_size_t)
 		{
-			ft_error("Don't exceed the size_t max in arguments", NULL);
+			ft_error("Don't exceed the size_t max in arguments");
 			return (1);
 		}
 		arg++;

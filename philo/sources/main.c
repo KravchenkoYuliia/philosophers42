@@ -6,66 +6,13 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/06 17:27:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:36:03 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
 
 // return 1 = error
 // return 0 = success
-
-/*
-void	*ft_routine(void * philo)
-{
-	t_philo *philo_2 = (t_philo *)philo;
-	printf("I'm philo #%zu doing my routine\n", philo_2->count_philo);
-	if (pthread_mutex_lock(philo_2->lock) == 0)
-		printf("Philosopher #%zu is eating\n", philo_2->count_philo);
-	
-	pthread_mutex_unlock(philo_2->lock);
-	return (NULL);
-
-	 tu as en parametre le DINER tu dois proteger ton id philo 
-	 mtx_lock -> i = id_philo -> mtx_unlock 
-
-}
-
-int	ft_create_philo(t_philo **philo)
-{
-
-	(*philo)->count_philo = 1;
-	while ((*philo)->count_philo <= (*philo)->nb_of_philo) 
-	{
-		if (pthread_create(&(*philo)->philo, NULL, ft_routine, (void *)*philo) != 0)
-		{
-			ft_error("Failed to create thread", philo);
-			return (1);
-		}
-		if (pthread_join((*philo)->philo, NULL) != 0)
-		{
-			ft_error("Failed to join thread", philo);
-			return (1);
-		}
-		write(1, "Good\n", 5);
-		(*philo)->count_philo++;
-	}
-	return (0);
-}
-
-int	ft_create_diner(t_diner *diner)
-{
-	int	i;
-
-	i = 0;
-	while (i < diner->nb_of_philo)
-		pthread_create(&diner, NULL, ft_routine, (void *)diner->philos[i++]);
-	i = 0;
-	while (i < diner->nb_of_philo)
-		pthread_join(diner->philos[i++], NULL);
-	return (0);
-	 free des mutex + ce qu'il y a free 
-}
-*/
 
 int     ft_init_dinner(t_dinner **dinner, int ac, char **av)
 {
@@ -120,7 +67,7 @@ void	*ft_routine(void *arg)
 	t_philos *philo;
 
 	philo = (t_philos *)arg;
-	printf("Hello from philosopher #%zu\n", philo->index);
+	printf("Hello from philosopher #%zu\n", philo->index + 1);
 	return (arg);
 }
 
