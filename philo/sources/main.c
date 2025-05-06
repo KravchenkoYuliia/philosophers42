@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/06 17:17:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:27:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -159,7 +159,7 @@ int	ft_create_philos(t_dinner **dinner)
 		(*dinner)->philos[i]->index = i;
 		if (ft_create_threads((*dinner)->philos[i]) == 1)
 		{
-			ft_stop_created_threads((*dinner)->philos, i);
+			ft_stop_created_threads((*dinner)->philos, i + 1);
 			ft_free_array((*dinner)->philos, (*dinner)->philos[i]->index + 1);
 			free(*dinner);
 			return (1);
