@@ -4,3 +4,6 @@ a.out
 philo/philo
 philo/objects
 philo/temp.c
+philo/test.c
+philo/new_test.c
+
