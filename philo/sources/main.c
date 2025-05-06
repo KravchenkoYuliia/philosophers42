@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/06 15:24:16 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:17:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -115,6 +115,36 @@ int	ft_malloc_every_philo(t_dinner **dinner, int i)
 	return (0);
 }
 
+void	*ft_routine(void *arg)
+{
+	t_philos *philo;
+
+	philo = (t_philos *)arg;
+	printf("Hello from philosopher #%zu\n", philo->index);
+	return (arg);
+}
+
+int	ft_create_threads(t_philos *philo)
+{
+	philo->stop_threads = false;
+	if (pthread_create(&philo->thread_id, NULL, (void *)ft_routine, (void *)philo) != 0)
+	{
+		printf("Failed to create a thread for %zu philo\n", philo->index);
+		philo->stop_threads = true;
+		return (1);
+	}
+	return (0);
+}
+int	ft_join_threads(t_philos *philo)
+{
+	if (pthread_join(philo->thread_id, NULL) != 0)
+	{
+		printf("Failed to join a thread for %zu philo\n", philo->index);
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_create_philos(t_dinner **dinner)
 {
 	size_t	i;
@@ -126,12 +156,29 @@ int	ft_create_philos(t_dinner **dinner)
 	{
 		if (ft_malloc_every_philo(dinner, i) == 1)
 			return (1);
-		//(*dinner)->philos->id = i;
+		(*dinner)->philos[i]->index = i;
+		if (ft_create_threads((*dinner)->philos[i]) == 1)
+		{
+			ft_stop_created_threads((*dinner)->philos, i);
+			ft_free_array((*dinner)->philos, (*dinner)->philos[i]->index + 1);
+			free(*dinner);
+			return (1);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < (*dinner)->nb_of_philos)
+	{
+		if (ft_join_threads((*dinner)->philos[i]) == 1)
+		{
+			ft_free_array((*dinner)->philos, (*dinner)->philos[i]->index + 1);
+			free(*dinner);
+			return (1);
+		}
 		i++;
 	}
 	return (0);
 }
-
 int	ft_philo(int ac, char **av)
 {
 	t_dinner	*dinner;

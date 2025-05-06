@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/06 15:22:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:33:20 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <stdbool.h>
 
 typedef struct	s_philos t_philos;
 
@@ -33,7 +34,9 @@ typedef struct s_dinner{
 } t_dinner;
 
 typedef struct	s_philos{
-	size_t		id;
+	size_t		index;
+	bool		stop_threads;
+	pthread_t	thread_id;
 	size_t		nb_meals;
 	pthread_mutex_t	left_fork;
 	pthread_mutex_t	right_fork;
@@ -48,5 +51,6 @@ int	ft_strlen(char *str);
 int	ft_isdigit(int ac, char **av);
 int	ft_MAX(int ac, char **av);
 void    ft_free_array(t_philos** philos, size_t nb_of_philos);
+void    ft_stop_created_threads(t_philos **philos, size_t ind_of_failed_philo);
 
 # endif
