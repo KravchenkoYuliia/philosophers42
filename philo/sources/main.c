@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/06 15:03:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:24:16 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -92,7 +92,7 @@ int     ft_init_dinner(t_dinner **dinner, int ac, char **av)
 
 int	ft_malloc_array_of_philos(t_dinner **dinner)
 {
-	(*dinner)->philos = malloc((sizeof(t_philos *)) * ((*dinner)->nb_of_philos));
+	(*dinner)->philos = (t_philos **)malloc((sizeof(t_philos *)) * ((*dinner)->nb_of_philos));
 	if (!(*dinner)->philos)
 	{
 		ft_error("Malloc failed for array of philos");
@@ -102,11 +102,33 @@ int	ft_malloc_array_of_philos(t_dinner **dinner)
 	return (0);
 }
 
+int	ft_malloc_every_philo(t_dinner **dinner, int i)
+{
+	(*dinner)->philos[i] = (t_philos *)malloc(sizeof(t_philos));
+	if (!(*dinner)->philos[i])
+	{
+		ft_error("Malloc failed for every philo");
+		free((*dinner)->philos);
+		free(*dinner);
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_create_philos(t_dinner **dinner)
 {
+	size_t	i;
+
+	i = 0;
 	if (ft_malloc_array_of_philos(dinner) == 1)
 		return (1);
-	
+	while (i < (*dinner)->nb_of_philos)
+	{
+		if (ft_malloc_every_philo(dinner, i) == 1)
+			return (1);
+		//(*dinner)->philos->id = i;
+		i++;
+	}
 	return (0);
 }
 
@@ -119,8 +141,7 @@ int	ft_philo(int ac, char **av)
 		return (1);
 	if (ft_create_philos(&dinner) == 1)
 		return (1);
-	free(dinner->philos);
-	//ft_free_array(dinner->philos, dinner->nb_of_philos);
+	ft_free_array(dinner->philos, dinner->nb_of_philos);
 	pthread_mutex_destroy(&dinner->mtx_init);
 	free(dinner);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/06 14:56:53 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:22:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef struct s_dinner{
 } t_dinner;
 
 typedef struct	s_philos{
-	int		id;
-	int		nb_meals;
+	size_t		id;
+	size_t		nb_meals;
 	pthread_mutex_t	left_fork;
 	pthread_mutex_t	right_fork;
 	t_dinner	*dinner;
@@ -47,6 +47,6 @@ void	ft_error(char *msg);
 int	ft_strlen(char *str);
 int	ft_isdigit(int ac, char **av);
 int	ft_MAX(int ac, char **av);
-void    ft_free_array(t_philos** philos, int nb_of_philos);
+void    ft_free_array(t_philos** philos, size_t nb_of_philos);
 
 # endif
