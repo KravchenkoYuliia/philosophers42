@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/07 12:28:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:32:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_dinner{
 	size_t		time_to_sleep;
 	size_t		nb_of_times_philo_must_eat;
 	pthread_mutex_t	*mtx_forks;
+	pthread_mutex_t	mtx_printf;
 	t_philos	**philos;
 
 } t_dinner;

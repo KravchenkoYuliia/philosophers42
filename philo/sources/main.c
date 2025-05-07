@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/07 13:29:37 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:00:14 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -59,6 +59,13 @@ int     ft_init_dinner(t_dinner **dinner, int ac, char **av)
 		free(*dinner);	
 		return (1);
 	}
+        if(pthread_mutex_init(&(*dinner)->mtx_printf, NULL) != 0)
+        {
+               	printf("Failed to initialize mutex for printf\n");
+		ft_destroy_initialized_mtx((*dinner)->mtx_forks, (*dinner)->nb_of_philos);
+		free((*dinner)->mtx_forks);
+                return (1);
+        }
 	return (0);
 }
 
@@ -84,7 +91,59 @@ int	ft_malloc_every_philo(t_dinner **dinner, int i)
 		free(*dinner);
 		return (1);
 	}
+	(*dinner)->philos[i]->dinner = *dinner;
 	return (0);
+}
+
+int	ft_routine_for_even(t_philos *philo)
+{
+		if (pthread_mutex_lock(&(philo->dinner->mtx_forks[philo->left_fork])) == 0) //LEFT FORK IS LOCKED
+		{
+			pthread_mutex_lock(&philo->dinner->mtx_printf);
+			printf("Philo #%zu locked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
+			pthread_mutex_unlock(&philo->dinner->mtx_printf);
+
+			
+			
+			if (pthread_mutex_lock(&(philo->dinner->mtx_forks[philo->right_fork])) != 0) //RIGHT FORK IS LOCKED
+			{	
+				pthread_mutex_lock(&philo->dinner->mtx_printf);
+				printf("Philo #%zu is thinking\n", philo->index + 1);
+				pthread_mutex_unlock(&philo->dinner->mtx_printf);
+				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->left_fork])); //LEFT FORK IS UNLOCKED
+
+				pthread_mutex_lock(&philo->dinner->mtx_printf);
+				printf("Philo #%zu unlocked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
+				pthread_mutex_unlock(&philo->dinner->mtx_printf);
+			}
+			else
+			{
+				pthread_mutex_lock(&philo->dinner->mtx_printf);
+				printf("Philo #%zu locked a fork #%zu\n", philo->index + 1, philo->right_fork + 1);
+				pthread_mutex_unlock(&philo->dinner->mtx_printf);
+
+
+				pthread_mutex_lock(&philo->dinner->mtx_printf);
+				printf("Philo #%zu is eating\n", philo->index + 1);
+				pthread_mutex_unlock(&philo->dinner->mtx_printf);
+
+
+				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->right_fork])); //RIGHT FORK IS UNLOCKED
+				
+				pthread_mutex_lock(&philo->dinner->mtx_printf);
+				printf("Philo #%zu unlocked a fork #%zu\n", philo->index + 1, philo->right_fork + 1);
+				pthread_mutex_unlock(&philo->dinner->mtx_printf);
+			
+				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->left_fork])); //LEFT FORK IS UNLOCKED
+
+				pthread_mutex_lock(&philo->dinner->mtx_printf);
+				printf("Philo #%zu unlocked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
+				pthread_mutex_unlock(&philo->dinner->mtx_printf);
+			}
+			return (0);
+		}
+		else
+			return (1);
 }
 
 void	*ft_routine(void *arg)
@@ -92,9 +151,62 @@ void	*ft_routine(void *arg)
 	t_philos *philo;
 
 	philo = (t_philos *)arg;
-	//pthread_mutex_lock();
-	printf("Hello from philosopher #%zu\n", philo->index + 1);
+	if (philo->dinner->nb_of_philos == 1)
+	{
+		printf("philo #1 has died\n");
+		return (NULL);
+	}
+	if (philo->index % 2 == 0)
+	{
+		if (ft_routine_for_even(philo) == 1)
+		{
+			pthread_detach(philo->thread_id);
+			return (NULL);
+		}
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->dinner->mtx_printf);
+		printf("Philo #%zu is sleeping\n", philo->index + 1);
+		pthread_mutex_unlock(&philo->dinner->mtx_printf);
 
+		usleep(200000);
+		if (pthread_mutex_lock(&(philo->dinner->mtx_forks[philo->left_fork])) == 0) //LEFT FORK IS LOCKED
+		{
+			pthread_mutex_lock(&philo->dinner->mtx_printf);
+			printf("Philo #%zu locked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
+			pthread_mutex_unlock(&philo->dinner->mtx_printf);
+
+			
+			
+			if (pthread_mutex_lock(&(philo->dinner->mtx_forks[philo->right_fork])) != 0) //RIGHT FORK IS LOCKED
+			{	
+				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->left_fork])); //LEFT FORK IS UNLOCKED
+				pthread_mutex_lock(&philo->dinner->mtx_printf);
+				printf("Philo #%zu unlocked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
+				pthread_mutex_unlock(&philo->dinner->mtx_printf);
+				
+				pthread_mutex_lock(&philo->dinner->mtx_printf);
+				printf("Philo #%zu is thinking\n", philo->index + 1);
+				usleep(200000);
+				pthread_mutex_unlock(&philo->dinner->mtx_printf);
+
+			}
+			else
+			{
+				pthread_mutex_lock(&philo->dinner->mtx_printf);
+				printf("Philo #%zu is eating\n", philo->index + 1);
+				pthread_mutex_unlock(&philo->dinner->mtx_printf);
+
+
+				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->right_fork])); //RIGHT FORK IS UNLOCKED
+				
+			
+				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->left_fork])); //LEFT FORK IS UNLOCKED
+
+			}
+		}
+	}
 	return (arg);
 }
 
@@ -119,6 +231,16 @@ int	ft_join_threads(t_philos *philo)
 	return (0);
 }
 
+void	ft_init_index_philo_forks(t_dinner **dinner, size_t i)
+{
+	(*dinner)->philos[i]->index = i;
+	(*dinner)->philos[i]->left_fork = i;
+	if (i == (*dinner)->nb_of_philos - 1) //last philo
+		(*dinner)->philos[i]->right_fork = 0;
+	else
+		(*dinner)->philos[i]->right_fork = i + 1;
+}
+
 int	ft_create_philos(t_dinner **dinner)
 {
 	size_t	i;
@@ -130,7 +252,7 @@ int	ft_create_philos(t_dinner **dinner)
 	{
 		if (ft_malloc_every_philo(dinner, i) == 1)
 			return (1);
-		(*dinner)->philos[i]->index = i;
+		ft_init_index_philo_forks(dinner, i);
 		if (ft_create_threads((*dinner)->philos[i]) == 1)
 		{
 			ft_stop_created_threads((*dinner)->philos, i + 1);
@@ -163,6 +285,7 @@ int	ft_philo(int ac, char **av)
 	if (ft_create_philos(&dinner) == 1)
 		return (1);
 	ft_destroy_initialized_mtx(dinner->mtx_forks, dinner->nb_of_philos);
+	pthread_mutex_destroy(&dinner->mtx_printf);
 	free(dinner->mtx_forks);
 	ft_free_array(dinner->philos, dinner->nb_of_philos);
 	free(dinner);
