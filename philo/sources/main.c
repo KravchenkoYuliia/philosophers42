@@ -6,13 +6,39 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/06 17:36:03 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:29:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
 
 // return 1 = error
 // return 0 = success
+
+int	ft_init_mtx_forks_array(pthread_mutex_t **mtx_forks, size_t nb_of_philos)
+{
+	size_t	i;
+
+	i = 0;
+	*mtx_forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * nb_of_philos);
+	if (!*mtx_forks)
+	{
+		printf("Malloc failed for array of mtx_forks\n");	
+		return (1);
+	}
+	while (i < nb_of_philos)
+	{
+        	if(pthread_mutex_init(&(*mtx_forks)[i], NULL) != 0)
+        	{
+                	printf("Failed to initialize mutex for forks\n");
+			ft_destroy_initialized_mtx(*mtx_forks, i);
+			free(*mtx_forks);
+        	        return (1);
+        	}
+		i++;
+	}
+        return (0);
+}
+
 
 int     ft_init_dinner(t_dinner **dinner, int ac, char **av)
 {
@@ -28,13 +54,12 @@ int     ft_init_dinner(t_dinner **dinner, int ac, char **av)
         (*dinner)->time_to_sleep = ft_atoi(av[4]);
         if (ac == 6)
                 (*dinner)->nb_of_times_philo_must_eat = ft_atoi(av[5]);
-        if(pthread_mutex_init(&(*dinner)->mtx_init, NULL) != 0)
-        {
-                ft_error("Failed to initialize mutex");
-		free(*dinner);
-                return (1);
-        }
-        return (0);
+	if (ft_init_mtx_forks_array(&(*dinner)->mtx_forks, (*dinner)->nb_of_philos) != 0)
+	{
+		free(*dinner);	
+		return (1);
+	}
+	return (0);
 }
 
 int	ft_malloc_array_of_philos(t_dinner **dinner)
@@ -67,7 +92,9 @@ void	*ft_routine(void *arg)
 	t_philos *philo;
 
 	philo = (t_philos *)arg;
+	//pthread_mutex_lock();
 	printf("Hello from philosopher #%zu\n", philo->index + 1);
+
 	return (arg);
 }
 
@@ -135,8 +162,9 @@ int	ft_philo(int ac, char **av)
 		return (1);
 	if (ft_create_philos(&dinner) == 1)
 		return (1);
+	ft_destroy_initialized_mtx(dinner->mtx_forks, dinner->nb_of_philos);
+	free(dinner->mtx_forks);
 	ft_free_array(dinner->philos, dinner->nb_of_philos);
-	pthread_mutex_destroy(&dinner->mtx_init);
 	free(dinner);
 	return (0);
 }

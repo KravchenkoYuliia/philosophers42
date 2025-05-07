@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:03:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/06 16:37:17 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:47:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,16 @@ void	ft_stop_created_threads(t_philos **philos, size_t ind_of_failed_philo)
 		i++;
 	}
 
+}
+
+void	ft_destroy_initialized_mtx(pthread_mutex_t *mtx_forks, size_t end)
+{
+	size_t	i;
+
+	i = 0;
+	while(i < end)
+	{
+		pthread_mutex_destroy(&mtx_forks[i]);
+		i++;
+	}
 }
