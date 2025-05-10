@@ -1,8 +1,15 @@
 # philosophers42
-Basics of threading a process. Creating threads and exploring the use of mutexes
+Basics of threading a process. Creating threads and exploring the use of mutexes.
+
+🏄‍♀️ A thread is a single sequence stream within a process.
+Multithreading is a programming technique where a process is divided into multiple smaller units called threads, which can run simultaneously. Multithreading is commonly used in applications like web servers, games, and real-time systems to handle simultaneous tasks like user input, background processing, and other I/O operations simultaneously.
+
+🔐 A Mutex is a lock that we set before using a shared resource and release after using it.
+When the lock is set, no other thread can access the locked region of code.
 
 ![alt text](image-1.png)
 
+In computer science, the dining philosophers problem is an example problem often used in concurrent algorithm design to illustrate synchronization issues and techniques for resolving them.
 Here are the key things you need to know to succeed in this assignment:
 
 🤓 One or more philosophers sit at a round table.
