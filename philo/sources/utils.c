@@ -6,17 +6,22 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/16 14:38:10 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:35:41 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_printf_mtx(char *msg, t_philos *philo, size_t index)
+void	ft_printf_mtx(char *msg, t_dinner *dinner, size_t index)
 {
-	pthread_mutex_lock(&philo->dinner->mtx_printf);
-	printf(msg, index);
-	pthread_mutex_unlock(&philo->dinner->mtx_printf);
+	size_t  time_to_print;
+
+	gettimeofday(&dinner->end_time, NULL);
+	time_to_print = ft_get_time_to_print(dinner->start_time.tv_usec, dinner->end_time.tv_usec);
+
+	pthread_mutex_lock(&dinner->mtx_printf);
+	printf("[%zu] %zu %s\n", time_to_print, index, msg);
+	pthread_mutex_unlock(&dinner->mtx_printf);
 }
 
 size_t	ft_atoi(char *str)
@@ -112,4 +117,12 @@ int	ft_MAX(int ac, char **av)
 		arg++;
 	}
 	return (0);
+}
+
+size_t	ft_get_time_to_print(suseconds_t start, suseconds_t end)
+{
+	size_t	result;
+
+	result = end - start;
+	return (result);
 }
