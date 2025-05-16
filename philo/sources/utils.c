@@ -6,11 +6,18 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/06 17:34:57 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/16 14:38:10 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_printf_mtx(char *msg, t_philos *philo, size_t index)
+{
+	pthread_mutex_lock(&philo->dinner->mtx_printf);
+	printf(msg, index);
+	pthread_mutex_unlock(&philo->dinner->mtx_printf);
+}
 
 size_t	ft_atoi(char *str)
 {

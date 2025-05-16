@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/07 16:00:14 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:26:44 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -95,57 +95,6 @@ int	ft_malloc_every_philo(t_dinner **dinner, int i)
 	return (0);
 }
 
-int	ft_routine_for_even(t_philos *philo)
-{
-		if (pthread_mutex_lock(&(philo->dinner->mtx_forks[philo->left_fork])) == 0) //LEFT FORK IS LOCKED
-		{
-			pthread_mutex_lock(&philo->dinner->mtx_printf);
-			printf("Philo #%zu locked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
-			pthread_mutex_unlock(&philo->dinner->mtx_printf);
-
-			
-			
-			if (pthread_mutex_lock(&(philo->dinner->mtx_forks[philo->right_fork])) != 0) //RIGHT FORK IS LOCKED
-			{	
-				pthread_mutex_lock(&philo->dinner->mtx_printf);
-				printf("Philo #%zu is thinking\n", philo->index + 1);
-				pthread_mutex_unlock(&philo->dinner->mtx_printf);
-				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->left_fork])); //LEFT FORK IS UNLOCKED
-
-				pthread_mutex_lock(&philo->dinner->mtx_printf);
-				printf("Philo #%zu unlocked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
-				pthread_mutex_unlock(&philo->dinner->mtx_printf);
-			}
-			else
-			{
-				pthread_mutex_lock(&philo->dinner->mtx_printf);
-				printf("Philo #%zu locked a fork #%zu\n", philo->index + 1, philo->right_fork + 1);
-				pthread_mutex_unlock(&philo->dinner->mtx_printf);
-
-
-				pthread_mutex_lock(&philo->dinner->mtx_printf);
-				printf("Philo #%zu is eating\n", philo->index + 1);
-				pthread_mutex_unlock(&philo->dinner->mtx_printf);
-
-
-				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->right_fork])); //RIGHT FORK IS UNLOCKED
-				
-				pthread_mutex_lock(&philo->dinner->mtx_printf);
-				printf("Philo #%zu unlocked a fork #%zu\n", philo->index + 1, philo->right_fork + 1);
-				pthread_mutex_unlock(&philo->dinner->mtx_printf);
-			
-				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->left_fork])); //LEFT FORK IS UNLOCKED
-
-				pthread_mutex_lock(&philo->dinner->mtx_printf);
-				printf("Philo #%zu unlocked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
-				pthread_mutex_unlock(&philo->dinner->mtx_printf);
-			}
-			return (0);
-		}
-		else
-			return (1);
-}
-
 void	*ft_routine(void *arg)
 {
 	t_philos *philo;
@@ -156,57 +105,15 @@ void	*ft_routine(void *arg)
 		printf("philo #1 has died\n");
 		return (NULL);
 	}
-	if (philo->index % 2 == 0)
+	else
+		ft_printf_mtx("%zu Doing routine\n", philo, 0);
+	/*
+	if (philo->index % 2 == 0) //even numbers. Half of philos can eat without problem
 	{
-		if (ft_routine_for_even(philo) == 1)
-		{
-			pthread_detach(philo->thread_id);
-			return (NULL);
-		}
 	}
 	else
 	{
-		pthread_mutex_lock(&philo->dinner->mtx_printf);
-		printf("Philo #%zu is sleeping\n", philo->index + 1);
-		pthread_mutex_unlock(&philo->dinner->mtx_printf);
-
-		usleep(200000);
-		if (pthread_mutex_lock(&(philo->dinner->mtx_forks[philo->left_fork])) == 0) //LEFT FORK IS LOCKED
-		{
-			pthread_mutex_lock(&philo->dinner->mtx_printf);
-			printf("Philo #%zu locked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
-			pthread_mutex_unlock(&philo->dinner->mtx_printf);
-
-			
-			
-			if (pthread_mutex_lock(&(philo->dinner->mtx_forks[philo->right_fork])) != 0) //RIGHT FORK IS LOCKED
-			{	
-				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->left_fork])); //LEFT FORK IS UNLOCKED
-				pthread_mutex_lock(&philo->dinner->mtx_printf);
-				printf("Philo #%zu unlocked a fork #%zu\n", philo->index + 1, philo->left_fork + 1);
-				pthread_mutex_unlock(&philo->dinner->mtx_printf);
-				
-				pthread_mutex_lock(&philo->dinner->mtx_printf);
-				printf("Philo #%zu is thinking\n", philo->index + 1);
-				usleep(200000);
-				pthread_mutex_unlock(&philo->dinner->mtx_printf);
-
-			}
-			else
-			{
-				pthread_mutex_lock(&philo->dinner->mtx_printf);
-				printf("Philo #%zu is eating\n", philo->index + 1);
-				pthread_mutex_unlock(&philo->dinner->mtx_printf);
-
-
-				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->right_fork])); //RIGHT FORK IS UNLOCKED
-				
-			
-				pthread_mutex_unlock(&(philo->dinner->mtx_forks[philo->left_fork])); //LEFT FORK IS UNLOCKED
-
-			}
-		}
-	}
+	}*/
 	return (arg);
 }
 
