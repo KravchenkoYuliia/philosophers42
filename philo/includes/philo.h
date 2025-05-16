@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/16 16:39:13 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:50:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_dinner{
 typedef struct	s_philos{
 	
 	size_t		index;
-	bool		stop_threads;
+	bool		dead;
 	pthread_t	thread_id;
 	size_t		nb_meals;
 	size_t		left_fork;

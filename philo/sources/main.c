@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/16 17:47:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:06:12 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -98,16 +98,30 @@ int	ft_malloc_every_philo(t_dinner **dinner, int i)
 void	ft_eating_routine(t_philos *philo)
 {
 	pthread_mutex_lock(&philo->dinner->mtx_forks[philo->left_fork]);
-	ft_printf_mtx("has taken a fork on the left", philo->dinner, philo->index + 1);
+	ft_printf_mtx("has taken a fork", philo->dinner, philo->index + 1);
 	pthread_mutex_lock(&philo->dinner->mtx_forks[philo->right_fork]);
-	ft_printf_mtx("has taken a fork on the right", philo->dinner, philo->index + 1);
+	ft_printf_mtx("has taken a fork", philo->dinner, philo->index + 1);
 	ft_printf_mtx("is eating", philo->dinner, philo->index + 1);
 	usleep(philo->dinner->time_to_eat);
+	pthread_mutex_unlock(&philo->dinner->mtx_forks[philo->right_fork]);
+	pthread_mutex_unlock(&philo->dinner->mtx_forks[philo->left_fork]);
 }
+
+void	ft_sleeping_thinking(t_philos *philo)
+{
+	int		time_to_think;
+
+	ft_printf_mtx("is sleeping", philo->dinner, philo->index + 1);
+	usleep(philo->dinner->time_to_sleep);
+	ft_printf_mtx("is thinking", philo->dinner, philo->index + 1);
+	time_to_think = philo->dinner->time_to_eat - philo->dinner->time_to_sleep;
+	if (time_to_think > 0)
+		usleep(time_to_think);
+}
+
 void	*ft_routine(void *arg)
 {
 	t_philos	*philo;
-	int		time_to_think;
 
 	philo = (t_philos *)arg;
 	if (philo->dinner->nb_of_philos == 1)
@@ -115,29 +129,30 @@ void	*ft_routine(void *arg)
 		ft_printf_mtx("died", philo->dinner, philo->index + 1);
 		return (NULL);
 	}
-	if (philo->index % 2 == 0) //even numbers. Half of philos can eat without problem
+	int i  = 0;
+	while (i < 3)
 	{
-		ft_eating_routine(philo);
-	}
-	else
-	{
-		ft_printf_mtx("is sleeping", philo->dinner, philo->index + 1);
-		usleep(philo->dinner->time_to_sleep);
-		ft_printf_mtx("is thinking", philo->dinner, philo->index + 1);
-		time_to_think = philo->dinner->time_to_eat - philo->dinner->time_to_sleep;
-		if (time_to_think > 0)
-			usleep(time_to_think);
+		if (philo->index % 2 == 0) //even numbers. Half of philos can eat without problem
+		{
+			ft_eating_routine(philo);
+			ft_sleeping_thinking(philo);
+		}
+		else
+		{
+			ft_sleeping_thinking(philo);
+			ft_eating_routine(philo);
+		}
+		i++;
 	}
 	return (arg);
 }
 
 int	ft_create_threads(t_philos *philo)
 {
-	philo->stop_threads = false;
+	philo->dead = false;
 	if (pthread_create(&philo->thread_id, NULL, (void *)ft_routine, (void *)philo) != 0)
 	{
 		printf("Failed to create a thread for %zu philo\n", philo->index);
-		philo->stop_threads = true;
 		return (1);
 	}
 	return (0);

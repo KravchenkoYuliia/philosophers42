@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/16 16:35:41 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:52:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_printf_mtx(char *msg, t_dinner *dinner, size_t index)
 	time_to_print = ft_get_time_to_print(dinner->start_time.tv_usec, dinner->end_time.tv_usec);
 
 	pthread_mutex_lock(&dinner->mtx_printf);
-	printf("[%zu] %zu %s\n", time_to_print, index, msg);
+	printf("%zu %zu %s\n", time_to_print, index, msg);
 	pthread_mutex_unlock(&dinner->mtx_printf);
 }
 
