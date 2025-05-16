@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/16 18:50:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:32:47 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_dinner{
 	size_t		nb_of_times_philo_must_eat;
 	pthread_mutex_t	*mtx_forks;
 	pthread_mutex_t	mtx_printf;
+	pthread_mutex_t	mtx_timeofday;
 	t_philos	**philos;
 	struct timeval start_time;
 	struct timeval end_time;

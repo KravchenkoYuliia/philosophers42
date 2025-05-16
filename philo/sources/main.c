@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:23:29 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/16 19:06:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/16 19:51:47 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -97,14 +97,37 @@ int	ft_malloc_every_philo(t_dinner **dinner, int i)
 
 void	ft_eating_routine(t_philos *philo)
 {
-	pthread_mutex_lock(&philo->dinner->mtx_forks[philo->left_fork]);
-	ft_printf_mtx("has taken a fork", philo->dinner, philo->index + 1);
-	pthread_mutex_lock(&philo->dinner->mtx_forks[philo->right_fork]);
-	ft_printf_mtx("has taken a fork", philo->dinner, philo->index + 1);
-	ft_printf_mtx("is eating", philo->dinner, philo->index + 1);
+	char	c;
+
+	if (philo->left_fork < philo->right_fork)
+	{
+		pthread_mutex_lock(&philo->dinner->mtx_forks[philo->left_fork]);
+		ft_printf_mtx("has taken a fork", philo->dinner, philo->index + 1);
+		pthread_mutex_lock(&philo->dinner->mtx_forks[philo->right_fork]);
+		ft_printf_mtx("has taken a fork", philo->dinner, philo->index + 1);
+		ft_printf_mtx("is eating", philo->dinner, philo->index + 1);
+		c = 'l';
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->dinner->mtx_forks[philo->right_fork]);
+		ft_printf_mtx("has taken a fork", philo->dinner, philo->index + 1);
+		pthread_mutex_lock(&philo->dinner->mtx_forks[philo->left_fork]);
+		ft_printf_mtx("has taken a fork", philo->dinner, philo->index + 1);
+		ft_printf_mtx("is eating", philo->dinner, philo->index + 1);
+		c = 'r';
+	}
 	usleep(philo->dinner->time_to_eat);
-	pthread_mutex_unlock(&philo->dinner->mtx_forks[philo->right_fork]);
-	pthread_mutex_unlock(&philo->dinner->mtx_forks[philo->left_fork]);
+	if (c == 'l')
+	{
+		pthread_mutex_unlock(&philo->dinner->mtx_forks[philo->right_fork]);
+		pthread_mutex_unlock(&philo->dinner->mtx_forks[philo->left_fork]);
+	}
+	else
+	{
+		pthread_mutex_unlock(&philo->dinner->mtx_forks[philo->left_fork]);
+		pthread_mutex_unlock(&philo->dinner->mtx_forks[philo->right_fork]);
+	}
 }
 
 void	ft_sleeping_thinking(t_philos *philo)
@@ -124,6 +147,9 @@ void	*ft_routine(void *arg)
 	t_philos	*philo;
 
 	philo = (t_philos *)arg;
+	pthread_mutex_lock(&philo->dinner->mtx_timeofday);
+	gettimeofday(&philo->dinner->start_time, NULL);
+	pthread_mutex_unlock(&philo->dinner->mtx_timeofday);
 	if (philo->dinner->nb_of_philos == 1)
 	{
 		ft_printf_mtx("died", philo->dinner, philo->index + 1);
@@ -134,6 +160,7 @@ void	*ft_routine(void *arg)
 	{
 		if (philo->index % 2 == 0) //even numbers. Half of philos can eat without problem
 		{
+			ft_printf_mtx("is thinking", philo->dinner, philo->index + 1);
 			ft_eating_routine(philo);
 			ft_sleeping_thinking(philo);
 		}
@@ -184,7 +211,6 @@ int	ft_create_philos(t_dinner **dinner)
 	i = 0;
 	if (ft_malloc_array_of_philos(dinner) == 1)
 		return (1);
-	gettimeofday(&(*dinner)->start_time, NULL);
 	while (i < (*dinner)->nb_of_philos)
 	{
 		if (ft_malloc_every_philo(dinner, i) == 1)
