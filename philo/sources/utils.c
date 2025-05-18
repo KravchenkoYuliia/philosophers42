@@ -3,26 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/16 19:34:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:26:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_printf_mtx(char *msg, t_dinner *dinner, size_t index)
+void	ft_printf_mtx(t_index msg_index, t_dinner *dinner, size_t index)
 {
+	const char* messages[5] = {
+		"has taken a fork", "is eating", "is sleeping", "is thinking", "died"
+	};
+
 	size_t  time_to_print;
-	
-	pthread_mutex_lock(&dinner->mtx_timeofday);
-	gettimeofday(&dinner->end_time, NULL);
-	pthread_mutex_unlock(&dinner->mtx_timeofday);
-	time_to_print = ft_get_time_to_print(dinner->start_time.tv_usec, dinner->end_time.tv_usec);
+	struct timeval end_time;
+	gettimeofday(&end_time, NULL);
+
+	time_to_print = ft_get_time_to_print(dinner->start_time.tv_usec, end_time.tv_usec);
 
 	pthread_mutex_lock(&dinner->mtx_printf);
-	printf("%zu %zu %s\n", time_to_print, index, msg);
+	if (msg_index == EAT) {
+		printf("%zu %zu %s\n", time_to_print, index, messages[FORK]);
+		printf("%zu %zu %s\n", time_to_print, index, messages[FORK]);
+	}
+	printf("%zu %zu %s\n", time_to_print, index, messages[msg_index]);
 	pthread_mutex_unlock(&dinner->mtx_printf);
 }
 
@@ -48,7 +55,7 @@ int	ft_strlen(char *str)
 
 	i = 0;
 	if (!str)
-		return (0);
+		return (SUCCESS);
 	while (str[i])
 		i++;
 	return (i);
@@ -67,13 +74,13 @@ int	ft_isdigit(int ac, char **av)
 		{
 			if(!(av[arg][i] >= '0' && av[arg][i] <= '9'))
 			{
-				return (1);
+				return (ERROR);
 			}
 			i++;
 		}
 		arg++;
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 unsigned long long	ft_atoi_long(char *str)
@@ -100,12 +107,12 @@ int	ft_MAX(int ac, char **av)
 	if (ft_atoi(av[1]) > 200)
 	{
 		ft_error("Number of philosophers can't exceed 200");
-		return (1);
+		return (ERROR);
 	}
 	if (ft_atoi(av[1]) == 0)
 	{
 		printf("Add at least one philosopher\n");
-		return (1);
+		return (ERROR);
 	}
 	arg = 2;
 	max_size_t = 4294967295;
@@ -114,11 +121,11 @@ int	ft_MAX(int ac, char **av)
 		if (ft_atoi_long(av[arg]) > max_size_t)
 		{
 			ft_error("Don't exceed the size_t max in arguments");
-			return (1);
+			return (ERROR);
 		}
 		arg++;
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 size_t	ft_get_time_to_print(suseconds_t start, suseconds_t end)

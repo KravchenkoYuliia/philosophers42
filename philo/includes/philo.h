@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/16 19:32:47 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:24:58 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,18 @@
 # include <pthread.h>
 # include <stdbool.h>
 
+# define ERROR 1
+# define SUCCESS 0
+
 typedef struct	s_philos t_philos;
+
+typedef enum e_index {
+	FORK,
+	EAT,
+	SLEEP,
+	THINK,
+	DIE
+}	t_index;
 
 typedef struct s_dinner{
 	
@@ -35,7 +46,6 @@ typedef struct s_dinner{
 	pthread_mutex_t	mtx_timeofday;
 	t_philos	**philos;
 	struct timeval start_time;
-	struct timeval end_time;
 } t_dinner;
 
 typedef struct	s_philos{
@@ -60,7 +70,7 @@ int	ft_MAX(int ac, char **av);
 void    ft_free_array(t_philos** philos, size_t nb_of_philos);
 void    ft_stop_created_threads(t_philos **philos, size_t ind_of_failed_philo);
 void    ft_destroy_initialized_mtx(pthread_mutex_t *mtx_forks, size_t end);
-void    ft_printf_mtx(char *msg, t_dinner *dinner, size_t index);
+void    ft_printf_mtx(t_index msg_index, t_dinner *dinner, size_t index);
 size_t  ft_get_time_to_print(suseconds_t start, suseconds_t end);
 
 # endif
