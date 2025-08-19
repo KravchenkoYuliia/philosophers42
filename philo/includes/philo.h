@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 19:15:38 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/19 19:38:43 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ typedef enum e_index {
 	DIE
 }	t_index;
 
+typedef	struct s_general {
+
+	int		nb_of_philo;
+	long long	time_to_die;
+	long long	time_to_eat;
+	long long	time_to_sleep;
+	int		must_to_eat;
+	pthread_t	*threads_id;
+
+} t_general ;
+
 /////////////libft
 
 int			ft_strlen(char *str);
@@ -41,10 +52,13 @@ unsigned long long	ft_atoi_unsigned_longlong(char *str);
 //////////////
 
 int	ft_isdigit(int ac, char **av);
-int	ft_limits(int ac, char **av);
+int	ft_limits(char **av);
 
 ///////////////errors
 
 void	ft_error(char *msg);
+
+/////////////////
+int	ft_init(char **av);
 
 # endif

@@ -6,11 +6,18 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:37:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 17:40:56 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/19 19:39:06 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_philo(char **av)
+{
+	if (ft_init(av) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
+}
 
 int	main(int ac, char** av)
 {
@@ -19,12 +26,14 @@ int	main(int ac, char** av)
 		ft_error("Write the correct number of arguments, please");
 		return (ERROR);
 	}
-	if (ft_isdigit(ac, av) == ERROR)
+	else if (ft_isdigit(ac, av) == ERROR)
 	{
 		ft_error("Only positive numbers are accepted as arguments");
 		return (ERROR);
 	}
-	if (ft_limits(ac, av) == ERROR)
+	else if (ft_limits(av) == ERROR)
+		return (ERROR);
+	else if (ft_philo(av) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }

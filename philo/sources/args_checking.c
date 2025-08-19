@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:12:15 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 19:16:24 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/19 19:22:40 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,8 @@ int	ft_av5(char *av5)
 	return (SUCCESS);
 }
 
-int	ft_limits(int ac, char **av)
+int	ft_limits(char **av)
 {
-	(void)ac;
 	if (ft_av1_check(av[1]) == ERROR)
 		return (ERROR);
 	else if (ft_av2_av3_av4_check(av) == ERROR)
