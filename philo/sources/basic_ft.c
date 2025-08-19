@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:42:01 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 16:43:05 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:56:30 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,46 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
+
+int	ft_atoi(const char *nptr)
+{
+	char	*str;
+	int		result;
+	char	sign;
+
+	result = 0;
+	sign = 1;
+	str = (char *)nptr;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign *= -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		result *= 10;
+		result += *str - '0';
+		str++;
+	}
+	return (result * sign);
+}
+
+unsigned long long	ft_atoi_unsigned_longlong(char *str)
+{
+	unsigned long long	result;
+
+	result = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	while (*str >= '0' && *str <= '9')
+	{
+		result *= 10;
+		result += *str - '0';
+		str++;
+	}
+	return (result);
+}
+

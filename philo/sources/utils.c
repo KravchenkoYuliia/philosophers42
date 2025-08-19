@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 16:44:00 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:34:15 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,22 +78,6 @@ int	ft_MAX(int ac, char **av)
 	}
 	return (SUCCESS);
 }
-unsigned long long	ft_atoi_long(char *str)
-{
-	unsigned long long	result;
-
-	result = 0;
-	while ((*str >= 9 && *str <= 13) || *str == ' ')
-		str++;
-	while (*str >= '0' && *str <= '9')
-	{
-		result *= 10;
-		result += *str - '0';
-		str++;
-	}
-	return (result);
-}
-
 
 size_t	ft_get_time_to_print(suseconds_t start, suseconds_t end)
 {

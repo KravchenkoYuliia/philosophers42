@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:12:15 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 16:43:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/19 19:16:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,3 +34,74 @@ int	ft_isdigit(int ac, char **av)
 	return (SUCCESS);
 }
 
+int	ft_av1_check(char *av1)
+{
+	int	i;
+
+	i = ft_atoi(av1);
+	if (i < 0)
+	{
+		ft_error("INT MAX is exceeded");
+		return (ERROR);
+	}
+	else if (i == 0)
+	{
+		ft_error("Put at least one philo");
+		return (ERROR);
+	}
+	return (SUCCESS);
+}
+
+int	ft_av2_av3_av4_check(char **av)
+{
+	int		i;
+	unsigned long	temp;
+
+	i = 2;
+	while (i < 5)
+	{
+		temp = ft_atoi_unsigned_longlong(av[i]);
+		if (temp == 0)
+		{
+			ft_error("Don't be greedy, put something more");
+			return (ERROR);
+		}
+		else if (temp > SIGNED_LONG_LONG)
+		{
+			ft_error("Long long is exceeded... Impressive");
+			return (ERROR);
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int	ft_av5(char *av5)
+{
+	int	i;
+
+	i = ft_atoi(av5);
+	if (i == 0)
+	{
+		ft_error("Why put 0?");
+		return (ERROR);
+	}
+	else if (i < 0)
+	{
+		ft_error("INT MAX is exceeded");
+		return (ERROR);
+	}
+	return (SUCCESS);
+}
+
+int	ft_limits(int ac, char **av)
+{
+	(void)ac;
+	if (ft_av1_check(av[1]) == ERROR)
+		return (ERROR);
+	else if (ft_av2_av3_av4_check(av) == ERROR)
+		return (ERROR);
+	if (av[5] && ft_av5(av[5]) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
+}

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:37:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 16:38:33 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:40:56 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ int	main(int ac, char** av)
 		ft_error("Only positive numbers are accepted as arguments");
 		return (ERROR);
 	}
+	if (ft_limits(ac, av) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 16:45:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/19 19:15:38 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 
-#define UNSIGNED_LONG 4294967295
+#define	SIGNED_LONG_LONG 9223372036854775807
 
 typedef enum e_index {
 	SUCCESS,
@@ -35,13 +35,13 @@ typedef enum e_index {
 
 /////////////libft
 
-int	ft_strlen(char *str);
-
+int			ft_strlen(char *str);
+int			ft_atoi(const char *nptr);
+unsigned long long	ft_atoi_unsigned_longlong(char *str);
 //////////////
 
 int	ft_isdigit(int ac, char **av);
-int	ft_MAX(int ac, char **av);
-
+int	ft_limits(int ac, char **av);
 
 ///////////////errors
 
