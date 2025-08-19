@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/05/18 14:26:25 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/19 16:44:00 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,55 +49,6 @@ size_t	ft_atoi(char *str)
 	return (result);
 }
 
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (SUCCESS);
-	while (str[i])
-		i++;
-	return (i);
-}
-
-int	ft_isdigit(int ac, char **av)
-{
-	int	arg;
-	int	i;
-
-	arg = 1;
-	while (av[arg] && arg < ac)
-	{
-		i = 0;
-		while (av[arg][i])
-		{
-			if(!(av[arg][i] >= '0' && av[arg][i] <= '9'))
-			{
-				return (ERROR);
-			}
-			i++;
-		}
-		arg++;
-	}
-	return (SUCCESS);
-}
-
-unsigned long long	ft_atoi_long(char *str)
-{
-	unsigned long long	result;
-
-	result = 0;
-	while ((*str >= 9 && *str <= 13) || *str == ' ')
-		str++;
-	while (*str >= '0' && *str <= '9')
-	{
-		result *= 10;
-		result += *str - '0';
-		str++;
-	}
-	return (result);
-}
 
 int	ft_MAX(int ac, char **av)
 {
@@ -127,6 +78,22 @@ int	ft_MAX(int ac, char **av)
 	}
 	return (SUCCESS);
 }
+unsigned long long	ft_atoi_long(char *str)
+{
+	unsigned long long	result;
+
+	result = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	while (*str >= '0' && *str <= '9')
+	{
+		result *= 10;
+		result += *str - '0';
+		str++;
+	}
+	return (result);
+}
+
 
 size_t	ft_get_time_to_print(suseconds_t start, suseconds_t end)
 {

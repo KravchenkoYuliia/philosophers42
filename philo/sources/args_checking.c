@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   args_checking.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 16:37:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 16:38:33 by yukravch         ###   ########.fr       */
+/*   Created: 2025/08/19 16:12:15 by yukravch          #+#    #+#             */
+/*   Updated: 2025/08/19 16:43:44 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char** av)
+int	ft_isdigit(int ac, char **av)
 {
-	if (ac != 5 && ac != 6)
+	int	arg;
+	int	i;
+
+	arg = 1;
+	while (av[arg] && arg < ac)
 	{
-		ft_error("Write the correct number of arguments, please");
-		return (ERROR);
-	}
-	if (ft_isdigit(ac, av) == ERROR)
-	{
-		ft_error("Only positive numbers are accepted as arguments");
-		return (ERROR);
+		i = 0;
+		while (av[arg][i])
+		{
+			if(!(av[arg][i] >= '0' && av[arg][i] <= '9'))
+			{
+				return (ERROR);
+			}
+			i++;
+		}
+		arg++;
 	}
 	return (SUCCESS);
 }
+

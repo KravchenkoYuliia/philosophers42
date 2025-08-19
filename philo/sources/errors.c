@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 16:37:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 16:38:33 by yukravch         ###   ########.fr       */
+/*   Created: 2025/08/19 16:39:25 by yukravch          #+#    #+#             */
+/*   Updated: 2025/08/19 16:39:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char** av)
+void	ft_error(char *msg)
 {
-	if (ac != 5 && ac != 6)
-	{
-		ft_error("Write the correct number of arguments, please");
-		return (ERROR);
-	}
-	if (ft_isdigit(ac, av) == ERROR)
-	{
-		ft_error("Only positive numbers are accepted as arguments");
-		return (ERROR);
-	}
-	return (SUCCESS);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
 }
