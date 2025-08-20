@@ -6,7 +6,7 @@
 #    By: yukravch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/30 14:29:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/08/20 14:31:14 by yukravch         ###   ########.fr        #
+#    Updated: 2025/08/20 17:37:07 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CFLAGS = -Wall -Werror -Wextra -g3 -I $(INC_DIR)
 #CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g -pthread -g3 -I $(INC_DIR)
 #flags for a big number of threads that is impossible for valgrind
 #valgrind --tool=helgrind
+#valgrind --tool=drd
 
 all: $(NAME)
 	@echo "                      "
@@ -35,7 +36,8 @@ OBJ_DIR = objects
 INC_DIR = includes
 
 
-FILES = main.c basic_ft.c args_checking.c errors.c init.c routine.c
+FILES = main.c basic_ft.c args_checking.c write.c philo.c mutex.c routine.c \
+	clean.c
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 

@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   write.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 14:29:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/20 16:23:28 by yukravch         ###   ########.fr       */
+/*   Created: 2025/08/19 16:39:25 by yukravch          #+#    #+#             */
+/*   Updated: 2025/08/20 17:12:56 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*ft_routine(void *data)
+void	ft_error(char *msg)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)data;
-	return (NULL);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
 }
+

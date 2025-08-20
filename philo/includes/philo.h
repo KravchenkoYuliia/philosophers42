@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/20 14:39:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/20 17:57:55 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,17 @@ typedef struct s_philo {
 
 typedef	struct s_general {
 
+	bool		stop;
 	int		nb_of_philo;
 	long long	time_to_die;
 	long long	time_to_eat;
 	long long	time_to_sleep;
 	int		must_to_eat;
 	t_philo		*philo;
-
+	pthread_mutex_t	write_mutex;
+	pthread_mutex_t	*forks_mutex;
+	pthread_mutex_t	stop_mutex;
+	
 } t_general ;
 
 /////////////libft
@@ -71,9 +75,9 @@ void	ft_error(char *msg);
 
 /////////////////
 int	ft_init(char **av, t_general **main);
-int	ft_init_philos(t_general *main);
+int	ft_create_philos(t_general *main);
 
-////////////////
+int	ft_init_mutex(t_general *main);
 
 void	*ft_routine(void *data);
 
