@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:37:59 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 19:39:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:50:39 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 int	ft_philo(char **av)
 {
-	if (ft_init(av) == ERROR)
+	t_general	*main;
+
+	if (ft_init(av, &main) == ERROR)
 		return (ERROR);
+	free(main->philo);
+	free(main);
 	return (SUCCESS);
 }
 
