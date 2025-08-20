@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/20 17:57:55 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/20 18:24:35 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	ft_limits(char **av);
 ///////////////errors
 
 void	ft_error(char *msg);
+int	ft_protected_write(t_general *main, char *msg);
 
 /////////////////
 int	ft_init(char **av, t_general **main);
