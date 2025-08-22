@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:39:25 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 12:35:23 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/22 14:03:07 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	ft_protected_write(t_philo *philo, int action)
 	if (timestamp == ERROR)
 		return (ERROR);
 	ft_get_txt_to_write(write_it, action);
+	if (ft_check_stop_flag(philo->main) != SUCCESS)
+                return (ERROR);
 	if (pthread_mutex_lock(&philo->main->write_mutex) != SUCCESS)
 		return (ERROR);
 	printf("%lld %d %s\n", timestamp, philo->index + 1, write_it);

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 11:05:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:45:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,7 @@ int	ft_init(char **av, t_general **main)
 		(*main)->must_to_eat = ft_atoi(av[5]);
 	ft_save_start_time(*main);
 	if (ft_create_philos(*main) == ERROR)
-	{
-		free(*main);
 		return (ERROR);
-	}
 	if (ft_init_mutex(*main) == ERROR)
 		return (ERROR);
 	return (SUCCESS);

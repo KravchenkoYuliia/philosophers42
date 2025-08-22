@@ -3,86 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/01 10:34:08 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 18:34:15 by yukravch         ###   ########.fr       */
+/*   Created: 2025/08/22 13:35:39 by yukravch          #+#    #+#             */
+/*   Updated: 2025/08/22 14:09:41 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_printf_mtx(t_index msg_index, t_dinner *dinner, size_t index)
+int	ft_check_stop_flag(t_general *main)
 {
-	const char* messages[5] = {
-		"has taken a fork", "is eating", "is sleeping", "is thinking", "died"
-	};
-
-	size_t  time_to_print;
-	struct timeval end_time;
-	gettimeofday(&end_time, NULL);
-
-	time_to_print = ft_get_time_to_print(dinner->start_time.tv_usec, end_time.tv_usec);
-
-	pthread_mutex_lock(&dinner->mtx_printf);
-	if (msg_index == EAT) {
-		printf("%zu %zu %s\n", time_to_print, index, messages[FORK]);
-		printf("%zu %zu %s\n", time_to_print, index, messages[FORK]);
-	}
-	printf("%zu %zu %s\n", time_to_print, index, messages[msg_index]);
-	pthread_mutex_unlock(&dinner->mtx_printf);
-}
-
-size_t	ft_atoi(char *str)
-{
-	size_t		result;
-
-	result = 0;
-	while ((*str >= 9 && *str <= 13) || *str == ' ')
-		str++;
-	while (*str >= '0' && *str <= '9')
-	{
-		result *= 10;
-		result += *str - '0';
-		str++;
-	}
-	return (result);
-}
-
-
-int	ft_MAX(int ac, char **av)
-{
-	int	arg;
-	size_t	max_size_t;
-
-	if (ft_atoi(av[1]) > 200)
-	{
-		ft_error("Number of philosophers can't exceed 200");
+	if (pthread_mutex_lock(&main->stop_mutex) != SUCCESS)
 		return (ERROR);
-	}
-	if (ft_atoi(av[1]) == 0)
+	if (main->stop == true)
 	{
-		printf("Add at least one philosopher\n");
-		return (ERROR);
-	}
-	arg = 2;
-	max_size_t = 4294967295;
-	while (av[arg] && arg < ac)
-	{
-		if (ft_atoi_long(av[arg]) > max_size_t)
-		{
-			ft_error("Don't exceed the size_t max in arguments");
+		if (pthread_mutex_unlock(&main->stop_mutex) != SUCCESS)
 			return (ERROR);
-		}
-		arg++;
+		return (STOP);
 	}
+	if (pthread_mutex_unlock(&main->stop_mutex) != SUCCESS)
+		return (ERROR);
 	return (SUCCESS);
 }
 
-size_t	ft_get_time_to_print(suseconds_t start, suseconds_t end)
+void	ft_stop_flag_is_true(t_philo *philo)
 {
-	size_t	result;
-
-	result = end - start;
-	return (result);
+	if (pthread_mutex_lock(&main->stop_mutex) != SUCCESS)
+		return ;
+	philo->main->stop = true;
+	pthread_mutex_unlock(&main->stop_mutex);
 }

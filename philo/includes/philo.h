@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 12:36:09 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/22 14:10:51 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef enum e_index {
 	SLEEP,
 	THINK,
 	DIE
+	STOP
 }	t_index;
 
 typedef struct s_philo {
@@ -67,6 +68,7 @@ int			ft_strlen(char *str);
 int			ft_atoi(const char *nptr);
 unsigned long long	ft_atoi_unsigned_longlong(char *str);
 char			*ft_strcpy(char *dest, char *src);
+
 //////////////
 
 int	ft_isdigit(int ac, char **av);
@@ -78,6 +80,7 @@ void	ft_error(char *msg);
 int	ft_protected_write(t_philo *philo, int action);
 
 /////////////////
+
 int		ft_init(char **av, t_general **main);
 int		ft_save_start_time(t_general *main);
 long long	ft_count_time_from_the_start(t_general *main);
@@ -86,5 +89,6 @@ int		ft_create_philos(t_general *main);
 int		ft_init_mutex(t_general *main);
 
 void		*ft_routine(void *data);
-
+int		ft_check_stop_flag(t_general *main);
+void		ft_stop_flag_is_true(t_philo *philo);
 # endif
