@@ -6,7 +6,7 @@
 #    By: yukravch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/30 14:29:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/08/22 13:39:47 by yukravch         ###   ########.fr        #
+#    Updated: 2025/08/22 16:01:51 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ INC_DIR = includes
 
 
 FILES = main.c basic_ft.c utils.c args_checking.c write.c time.c philo.c mutex.c routine.c \
-	clean.c
+	activities.c clean.c
 SRC = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(FILES:.c=.o))
 

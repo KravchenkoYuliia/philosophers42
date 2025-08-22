@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:14:10 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/20 19:03:54 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:57:07 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_forks_mutex(t_general *main)
 
 	i = 0;
 	main->forks_mutex = calloc(main->nb_of_philo, sizeof(pthread_mutex_t));
-	if (!main)
+	if (!main->forks_mutex)
 		return (ERROR);
 	while (i < main->nb_of_philo)
 	{
@@ -72,5 +72,4 @@ int	ft_init_mutex(t_general *main)
 	if (ft_stop_flag_mutex(main) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
-
 }
