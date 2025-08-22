@@ -6,29 +6,36 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:29:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 11:31:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/22 12:37:05 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	ft_one_philo(t_philo *philo, t_general *main)
+{
+	if (ft_protected_write(philo, FORK) == ERROR || ft_protected_write(philo, DIE) == ERROR)
+	{
+		//stop flag
+		//free all
+		return (ERROR);
+	}
+	(void)main;
+	//free all
+	return (SUCCESS);
+}
+
 void	*ft_routine(void *data)
 {
 	t_philo		*philo;
-	long long	now;
 
 	philo = (t_philo *)data;
 	philo->last_meal_time = philo->main->start_of_simulation;
-
-	//just testing time counting
-	now = ft_count_time_from_the_start(philo->main);
-	if (now == ERROR)
+	if(philo->main->nb_of_philo == 1)
 	{
-		//stop flag
+		if (ft_one_philo(philo, philo->main) == ERROR)
+			return (NULL);
 		return (NULL);
 	}
-	pthread_mutex_lock(&philo->main->write_mutex);
-	printf("%d philo's start time %lld and now to print = %lld\n", philo->index, philo->last_meal_time, now);
-	pthread_mutex_unlock(&philo->main->write_mutex); 
 	return (NULL);
 }

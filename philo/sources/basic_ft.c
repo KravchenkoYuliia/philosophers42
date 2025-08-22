@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:42:01 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 18:56:30 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/22 12:27:14 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,18 @@ unsigned long long	ft_atoi_unsigned_longlong(char *str)
 	return (result);
 }
 
+char	*ft_strcpy(char *dest, char *src)
+{
+	int	i;
+
+	i = 0;
+	if (!dest || !src)
+		return (NULL);
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}

@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 11:26:38 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/22 12:36:09 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef	struct s_general {
 int			ft_strlen(char *str);
 int			ft_atoi(const char *nptr);
 unsigned long long	ft_atoi_unsigned_longlong(char *str);
+char			*ft_strcpy(char *dest, char *src);
 //////////////
 
 int	ft_isdigit(int ac, char **av);
@@ -74,7 +75,7 @@ int	ft_limits(char **av);
 ///////////////errors
 
 void	ft_error(char *msg);
-int	ft_protected_write(t_general *main, char *msg);
+int	ft_protected_write(t_philo *philo, int action);
 
 /////////////////
 int		ft_init(char **av, t_general **main);
