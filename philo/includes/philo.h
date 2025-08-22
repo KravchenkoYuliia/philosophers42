@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 14:10:51 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/22 14:23:10 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 #define SUCCESS 0
 #define ERROR -1
+#define NOT_SPECIFIED -100
 #define	SIGNED_LONG_LONG 9223372036854775807
 
 typedef struct s_philo t_philo;
@@ -33,13 +34,14 @@ typedef enum e_index {
 	EAT,
 	SLEEP,
 	THINK,
-	DIE
+	DIE,
 	STOP
 }	t_index;
 
 typedef struct s_philo {
 
 	int		index;
+	int		has_eaten_times;
 	long long	last_meal_time;
 	pthread_t	threads_id;
 	t_general	*main;	
