@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 14:23:10 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/22 15:41:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef enum e_index {
 typedef struct s_philo {
 
 	int		index;
+	int		right_fork;
+	int		left_fork;
 	int		has_eaten_times;
 	long long	last_meal_time;
 	pthread_t	threads_id;
