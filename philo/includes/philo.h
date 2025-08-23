@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/23 13:17:17 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/23 16:09:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_philo {
 	int		right_fork;
 	int		left_fork;
 	int		has_eaten_times;
+	bool		already_counted_not_hungry;
 	long long	last_meal_time;
 	pthread_t	threads_id;
 	t_general	*main;	
@@ -54,6 +55,7 @@ typedef	struct s_general {
 
 	bool		stop;
 	int		nb_of_philo;
+	int		not_hungry_philo;
 	long long	time_to_die;
 	long long	time_to_eat;
 	long long	time_to_sleep;
@@ -86,18 +88,19 @@ int	ft_protected_write(t_philo *philo, int action);
 /////////////////
 
 int		ft_init(char **av, t_general **main);
-int		ft_save_start_time(t_general *main);
+long long	ft_get_current_time();
 long long	ft_count_time_from_the_start(t_general *main);
-int		ft_get_new_last_meal_time(t_philo *philo);
+void		ft_init_last_meal_time(t_general *main);
 int		ft_create_philos(t_general *main);
-
 int		ft_init_mutex(t_general *main);
 
 void		*ft_routine(void *data);
+bool		ft_not_hungry(t_general *main, t_philo *philo);
 int		ft_check_stop_flag(t_general *main);
 void		ft_stop_flag_is_true(t_philo *philo);
 
 int		ft_think(t_philo *philo);
 int		ft_eat(t_philo *philo);
 int		ft_sleep(t_philo *philo);
+bool		ft_die(t_philo *philo, long long current_time);
 # endif
