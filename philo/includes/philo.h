@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 17:33:08 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/23 12:36:25 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,5 @@ void		ft_stop_flag_is_true(t_philo *philo);
 
 int		ft_think(t_philo *philo);
 int		ft_eat(t_philo *philo);
+int		ft_sleep(t_philo *philo);
 # endif

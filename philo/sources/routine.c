@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:29:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 17:39:00 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/23 12:37:52 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ void	ft_many_philos(t_philo *philo)
 			return ;
 		if (ft_eat(philo) == ERROR)
 			return ;
+		if (ft_sleep(philo) == ERROR)
+			return ;
 		if (philo->main->must_to_eat != NOT_SPECIFIED &&
 		philo->has_eaten_times >= philo->main->must_to_eat)
 			break ;
-		break ; //temporarily for testing
 	}
 }
 void	*ft_routine(void *data)
