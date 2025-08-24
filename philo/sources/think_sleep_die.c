@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:01:15 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/23 16:38:27 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 15:24:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,19 @@
 
 int	ft_think(t_philo *philo)
 {
+	if (ft_check_stop_flag(philo->main) != SUCCESS)
+		return (ERROR);
 	if (ft_protected_write(philo, THINK) == ERROR)
 		return (ERROR);
 	if (philo->index % 2 == 0)
 	{
-		if (usleep(1000) != SUCCESS)
+		if (ft_check_stop_flag(philo->main) != SUCCESS)
+			return (ERROR);
+		if (usleep(500) != SUCCESS)
+			return (ERROR);
+		if (ft_check_stop_flag(philo->main) != SUCCESS)
+			return (ERROR);
+		if (usleep(500) != SUCCESS)
 			return (ERROR);
 	}
 	return (SUCCESS);
@@ -26,22 +34,29 @@ int	ft_think(t_philo *philo)
 
 int	ft_sleep(t_philo *philo)
 {
-	int		i;
-	long long	part;
+	t_sleep	sleep;
 
-	i = 0;
-	part = (philo->main->time_to_sleep * 1000) / 4;
 	if (ft_check_stop_flag(philo->main) != SUCCESS)
 		return (ERROR);
+	sleep.current_time = ft_get_current_time();
+	if (sleep.current_time == ERROR)
+		return (ERROR);
+	sleep.deadline = sleep.current_time + philo->main->time_to_sleep;
+	sleep.time_left = SIGNED_LONG_LONG;
 	if (ft_protected_write(philo, SLEEP) == ERROR)
 		return (ERROR);
-	while (i < 4)
+	while (sleep.time_left > 0)
 	{
+		sleep.current_time = ft_get_current_time();
+		if (sleep.current_time == ERROR)
+			return (ERROR);
+		sleep.time_left = sleep.deadline - sleep.current_time;
+		if (sleep.time_left <= 0)
+			break ;
 		if (ft_check_stop_flag(philo->main) != SUCCESS)
 			return (ERROR);
-		if (usleep(part) != SUCCESS)
+		if (usleep(ft_min(sleep.time_left, 500)) != SUCCESS)
 			return (ERROR);
-		i++;
 	}
 	return (SUCCESS);
 }
