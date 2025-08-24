@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:47:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 16:49:39 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 19:13:49 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,19 @@ int	ft_eating_routine(t_philo *philo, int min, int max)
 {
 	if (ft_taking_forks(philo, min, max) == ERROR)
 		return (ERROR);
+	//lock food_status mutex for changing its values
+	if (pthread_mutex_lock(&philo->main->food_status_mutex) != SUCCESS)
+		return (ERROR);
 	philo->last_meal_time = ft_get_current_time();
 	if (philo->last_meal_time == ERROR)
 		return (ERROR);
+	philo->has_eaten_times++;
+	if (pthread_mutex_unlock(&philo->main->food_status_mutex) != SUCCESS)
+		return (ERROR);
+
+	//unlock food_status mutex after changing its values
 	if (ft_protected_write(philo, EAT) == ERROR)
 		return (ERROR);
-	philo->has_eaten_times++;
 	if (usleep(philo->main->time_to_eat * 1000) != SUCCESS)
 		return (ERROR);
 	if (pthread_mutex_unlock(&philo->main->forks_mutex[min]) != SUCCESS)
@@ -95,9 +102,6 @@ bool	ft_not_hungry(t_general *main, t_philo *philo)
 		philo->already_counted_not_hungry = true;
 	}
 	if (main->not_hungry_philo >= main->nb_of_philo)
-	{
-		ft_stop_flag_is_true(philo);
 		return (true);
-	}
 	return (false);
 }

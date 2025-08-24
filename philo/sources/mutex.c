@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:14:10 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/22 17:57:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 18:21:35 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	ft_forks_mutex(t_general *main)
 	return (SUCCESS);
 }
 
-int	ft_stop_flag_mutex(t_general *main)
+int	ft_food_status_mutex(t_general *main)
 {
-	if (pthread_mutex_init(&main->stop_mutex, NULL) != SUCCESS)
+	if (pthread_mutex_init(&main->food_status_mutex, NULL) != SUCCESS)
 	{
 		free(main->philo);
 		free(main);
@@ -60,7 +60,21 @@ int	ft_stop_flag_mutex(t_general *main)
 		return (ERROR);
 	}
 	return (SUCCESS);
+}
 
+int	ft_stop_flag_mutex(t_general *main)
+{
+	if (pthread_mutex_init(&main->stop_mutex, NULL) != SUCCESS)
+	{
+		free(main->philo);
+		free(main);
+		//stop the threads;
+		pthread_mutex_destroy(&main->write_mutex);
+		pthread_mutex_destroy(&main->food_status_mutex);
+		//destroy all forks mutex
+		return (ERROR);
+	}
+	return (SUCCESS);
 }
 
 int	ft_init_mutex(t_general *main)
@@ -68,6 +82,8 @@ int	ft_init_mutex(t_general *main)
 	if (ft_write_mutex(main) == ERROR)
 		return (ERROR);
 	if (ft_forks_mutex(main) == ERROR)
+		return (ERROR);
+	if (ft_food_status_mutex(main) == ERROR)
 		return (ERROR);
 	if (ft_stop_flag_mutex(main) == ERROR)
 		return (ERROR);

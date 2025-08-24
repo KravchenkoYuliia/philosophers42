@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:01:15 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 15:24:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 18:49:41 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,3 @@ int	ft_sleep(t_philo *philo)
 	return (SUCCESS);
 }
 
-bool	ft_die(t_philo *philo, long long current_time)
-{
-	 if ((current_time - philo->last_meal_time)
-                        >= philo->main->time_to_die)
-	{
-		if (ft_protected_write(philo, DIE) == ERROR)
-			return (ERROR);
-		ft_stop_flag_is_true(philo);
-		return (true);
-	}
-	return (false);
-}

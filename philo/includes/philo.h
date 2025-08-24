@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 15:23:41 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 18:50:50 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ typedef	struct s_general {
 	t_philo		*philo;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	*forks_mutex;
+	pthread_mutex_t	food_status_mutex;
 	pthread_mutex_t	stop_mutex;
-	
+		
 } t_general ;
 
 /////////////libft
@@ -106,10 +107,9 @@ int		ft_init_mutex(t_general *main);
 void		*ft_routine(void *data);
 bool		ft_not_hungry(t_general *main, t_philo *philo);
 int		ft_check_stop_flag(t_general *main);
-void		ft_stop_flag_is_true(t_philo *philo);
+int		ft_stop_flag_is_true(t_general *main);
 
 int		ft_think(t_philo *philo);
 int		ft_eat(t_philo *philo);
 int		ft_sleep(t_philo *philo);
-bool		ft_die(t_philo *philo, long long current_time);
 # endif

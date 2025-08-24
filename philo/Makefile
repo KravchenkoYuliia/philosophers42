@@ -6,15 +6,15 @@
 #    By: yukravch <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/30 14:29:53 by yukravch          #+#    #+#              #
-#    Updated: 2025/08/23 14:28:23 by yukravch         ###   ########.fr        #
+#    Updated: 2025/08/24 19:54:00 by yukravch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 
-CFLAGS = -Wall -Werror -Wextra -g3 -I $(INC_DIR)
-#CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g -pthread -g3 -I $(INC_DIR)
+#CFLAGS = -Wall -Werror -Wextra -g3 -I $(INC_DIR)
+CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g -pthread -g3 -I $(INC_DIR)
 #flags for a big number of threads that is impossible for valgrind
 #valgrind --tool=helgrind
 #valgrind --tool=drd
