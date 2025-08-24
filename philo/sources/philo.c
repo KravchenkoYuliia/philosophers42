@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/23 16:07:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 17:18:42 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	ft_monitor(t_general *main)
 	while (1)
 	{
 		i = 0;
+		if (usleep(1000) != SUCCESS)
+			return (ERROR);
 		current_time = ft_get_current_time();
 		if (current_time == ERROR)
-			return (ERROR);
-		if (usleep(1000) != SUCCESS)
 			return (ERROR);
 		while (i < main->nb_of_philo)
 		{
