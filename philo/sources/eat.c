@@ -6,21 +6,37 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:47:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/23 16:21:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:49:39 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_eating_routine(t_philo *philo, int min, int max)
+int	ft_taking_forks(t_philo *philo, int min, int max)
 {
 	if (pthread_mutex_lock(&philo->main->forks_mutex[min]) != SUCCESS)
 		return (ERROR);
 	if (ft_protected_write(philo, FORK) == ERROR)
 		return (ERROR);
+	if (philo->main->nb_of_philo == 1)
+	{
+		//if (ft_one_philo_is_waiting_to_die(philo) == ERROR)
+		//	return (ERROR);
+		if (usleep(philo->main->time_to_die * 1000) != SUCCESS)
+			return (ERROR);
+		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
+		return (ERROR);
+	}
 	if (pthread_mutex_lock(&philo->main->forks_mutex[max]) != SUCCESS)
 		return (ERROR);
 	if (ft_protected_write(philo, FORK) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
+}
+
+int	ft_eating_routine(t_philo *philo, int min, int max)
+{
+	if (ft_taking_forks(philo, min, max) == ERROR)
 		return (ERROR);
 	philo->last_meal_time = ft_get_current_time();
 	if (philo->last_meal_time == ERROR)

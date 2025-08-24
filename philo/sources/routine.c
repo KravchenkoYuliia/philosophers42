@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:29:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/23 15:59:12 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:08:54 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ void	*ft_routine(void *data)
 	philo = (t_philo *)data;
 	if (ft_check_stop_flag(philo->main) != SUCCESS)
 		return (NULL);
-	if (philo->main->nb_of_philo == 1)
+	/*if (philo->main->nb_of_philo == 1)
 	{
 		if (ft_protected_write(philo, FORK) == ERROR)
 			return (NULL);
 		ft_protected_write(philo, DIE);
 	}
-	else
-		ft_many_philos(philo);
+	else*/
+	ft_many_philos(philo);
 	return (NULL);
 }
 
