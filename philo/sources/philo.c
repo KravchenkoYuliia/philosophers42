@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 20:02:47 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 21:06:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	ft_waiting_for_threads(t_general *main)
 	{
 		if (pthread_join(main->philo[i].threads_id, NULL) != SUCCESS)
 			return (ERROR);
-		printf("index = %d\n", main->philo[i].index);
 		i++;
 	}
 	return (SUCCESS);
@@ -102,6 +101,11 @@ int	ft_create_philos(t_general *main)
 			return (ERROR);
 		i++;
 	}
+	main->start_of_simulation = ft_get_current_time();
+	if (main->start_of_simulation == ERROR)
+		return (ERROR);
+	if (ft_start_flag_is_true(main) == ERROR)
+		return (ERROR);
 	if (ft_monitor(main) == ERROR)
 		return (ERROR);
 	if (ft_waiting_for_threads(main) == ERROR)
@@ -124,11 +128,9 @@ int	ft_init(char **av, t_general **main)
 		(*main)->must_to_eat = ft_atoi(av[5]);
 	else
 		(*main)->must_to_eat = NOT_SPECIFIED;
-	(*main)->start_of_simulation = ft_get_current_time();
-	if ((*main)->start_of_simulation == ERROR)
-		return (ERROR);
 	if (ft_init_mutex(*main) == ERROR)
 		return (ERROR);
+	(*main)->start = false;
 	if (ft_create_philos(*main) == ERROR)
 		return (ERROR);
 	return (SUCCESS);

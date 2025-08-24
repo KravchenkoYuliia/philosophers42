@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:14:10 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 18:21:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:19:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	ft_init_mutex(t_general *main)
 	if (ft_food_status_mutex(main) == ERROR)
 		return (ERROR);
 	if (ft_stop_flag_mutex(main) == ERROR)
+		return (ERROR);
+	if (ft_init_start_mutex(main) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }

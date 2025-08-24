@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 18:50:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/24 20:27:56 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef enum e_index {
 	SLEEP,
 	THINK,
 	DIE,
-	STOP
+	STOP,
+	START
 }	t_index;
 
 typedef struct s_sleep {
@@ -61,6 +62,7 @@ typedef struct s_philo {
 
 typedef	struct s_general {
 
+	bool		start;
 	bool		stop;
 	int		nb_of_philo;
 	int		not_hungry_philo;
@@ -73,6 +75,7 @@ typedef	struct s_general {
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	*forks_mutex;
 	pthread_mutex_t	food_status_mutex;
+	pthread_mutex_t	start_mutex;
 	pthread_mutex_t	stop_mutex;
 		
 } t_general ;
@@ -103,11 +106,14 @@ long long	ft_min(long long a, long long b);
 void		ft_init_last_meal_time(t_general *main);
 int		ft_create_philos(t_general *main);
 int		ft_init_mutex(t_general *main);
+int		ft_init_start_mutex(t_general *main);
 
 void		*ft_routine(void *data);
 bool		ft_not_hungry(t_general *main, t_philo *philo);
 int		ft_check_stop_flag(t_general *main);
+int		ft_check_start_flag(t_general *main);
 int		ft_stop_flag_is_true(t_general *main);
+int		ft_start_flag_is_true(t_general *main);
 
 int		ft_think(t_philo *philo);
 int		ft_eat(t_philo *philo);
