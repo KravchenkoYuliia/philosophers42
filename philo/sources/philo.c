@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 15:34:42 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:08:19 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_monitor(t_general *main)
 					return (ERROR);
 				if (ft_stop_flag_is_true(main) == ERROR)
 					return (ERROR);
-				if (ft_protected_write(&main->philo[i], 2309) == ERROR)
+				if (ft_protected_write(&main->philo[i], STOP) == ERROR)
 					return (ERROR);
 				return (SUCCESS);
 			}
@@ -49,6 +49,8 @@ int	ft_monitor(t_general *main)
 					return (ERROR);
 				if (ft_stop_flag_is_true(main) == ERROR)
 					return (SUCCESS);
+				if (ft_protected_write(&main->philo[i], STOP) == ERROR)
+					return (ERROR);
 				return (SUCCESS);
 			}
 			if (pthread_mutex_unlock(&main->food_status_mutex) != SUCCESS)

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:39:25 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 15:32:02 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:09:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	ft_get_txt_to_write(char write_it[20], int action)
 	else if (action == DIE)
 		ft_strcpy(write_it, "died");
 	else
-		ft_strcpy(write_it, "Leaving\n");
-
+		write_it[0] = '\0';
 }
 
 int	ft_protected_write(t_philo *philo, int action)
