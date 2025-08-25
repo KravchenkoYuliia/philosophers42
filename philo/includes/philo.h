@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 13:55:32 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:44:08 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,6 @@ int		ft_start_flag_is_true(t_general *main);
 int		ft_think(t_philo *philo);
 int		ft_eat(t_philo *philo);
 int		ft_sleep(t_philo *philo);
+
+void		ft_destroy_all_mutex(t_general *main);
 # endif

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 16:08:19 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:52:04 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	ft_create_philos(t_general *main)
 		return (ERROR);
 	if (ft_waiting_for_threads(main) == ERROR)
 		return (ERROR);
+	ft_destroy_all_mutex(main);
 	return (SUCCESS);
 }
 
@@ -136,6 +137,9 @@ int	ft_init(char **av, t_general **main)
 		return (ERROR);
 	(*main)->start = false;
 	if (ft_create_philos(*main) == ERROR)
+	{
+		ft_destroy_all_mutex(*main);
 		return (ERROR);
+	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:34:45 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 13:55:03 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:22:06 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ int	ft_time_to_eat(t_philo *philo)
 		if (usleep(ft_min(eat.time_left * 1000, 500)) != SUCCESS)
 			return (ERROR);
 	}
-
 	return (SUCCESS);
 }
