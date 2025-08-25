@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:39:25 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 16:09:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:07:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@ void	ft_error(char *msg)
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
 }
-
-/*
- 
-  timestamp_in_ms X has taken a fork
-◦ timestamp_in_ms X is eating
-◦ timestamp_in_ms X is sleeping
-◦ timestamp_in_ms X is thinking
-◦ timestamp_in_ms X died
-
- */
 
 void	ft_get_txt_to_write(char write_it[20], int action)
 {
@@ -47,7 +37,7 @@ void	ft_get_txt_to_write(char write_it[20], int action)
 int	ft_protected_write(t_philo *philo, int action)
 {
 	long long	timestamp;
-	char	write_it[20];
+	char		write_it[20];
 
 	timestamp = ft_count_time_from_the_start(philo->main);
 	if (timestamp == ERROR)
