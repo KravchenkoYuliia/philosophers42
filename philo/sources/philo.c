@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 16:52:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:55:10 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,50 +27,13 @@ int	ft_monitor(t_general *main)
 			return (ERROR);
 		while (i < main->nb_of_philo)
 		{
-			if (pthread_mutex_lock(&main->food_status_mutex) != SUCCESS)
-				return (ERROR);
-			if ((current_time - main->philo[i].last_meal_time)
-					>= main->time_to_die)
-			{
-				if (pthread_mutex_unlock(&main->food_status_mutex) != SUCCESS)
-					return (ERROR);
-				if (ft_protected_write(&main->philo[i], DIE) == ERROR)
-					return (ERROR);
-				if (ft_stop_flag_is_true(main) == ERROR)
-					return (ERROR);
-				if (ft_protected_write(&main->philo[i], STOP) == ERROR)
-					return (ERROR);
-				return (SUCCESS);
-			}
-			if (main->must_to_eat != NOT_SPECIFIED
-					&& ft_not_hungry(main, &main->philo[i]) == true)
-			{
-				if (pthread_mutex_unlock(&main->food_status_mutex) != SUCCESS)
-					return (ERROR);
-				if (ft_stop_flag_is_true(main) == ERROR)
-					return (SUCCESS);
-				if (ft_protected_write(&main->philo[i], STOP) == ERROR)
-					return (ERROR);
-				return (SUCCESS);
-			}
-			if (pthread_mutex_unlock(&main->food_status_mutex) != SUCCESS)
+			if (ft_monitor_checking(main, current_time, i) == ERROR)
 				return (ERROR);
 			i++;
 		}
 	}
 	return (SUCCESS);
 }
-
-/*
-	time to die
-	-get current time
-	-check last_meal_time for every philo
-	-current time - last meal time < time to die
-
-	must eat
-	-check every philo's has eaten time
-	-has eaten time < must eat
-*/
 
 int	ft_waiting_for_threads(t_general *main)
 {
