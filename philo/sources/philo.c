@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 21:06:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 12:35:35 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_monitor(t_general *main)
 	while (1)
 	{
 		i = 0;
-		if (usleep(500) != SUCCESS)
+		if (usleep(1000) != SUCCESS)
 			return (ERROR);
 		current_time = ft_get_current_time();
 		if (current_time == ERROR)
@@ -32,6 +32,7 @@ int	ft_monitor(t_general *main)
 			if ((current_time - main->philo[i].last_meal_time)
 					>= main->time_to_die)
 			{
+				printf("current %lld - last meal %lld >= time to die %lld\n", current_time, main->philo[i].last_meal_time, main->time_to_die);
 				if (pthread_mutex_unlock(&main->food_status_mutex) != SUCCESS)
 					return (ERROR);
 				if (ft_protected_write(&main->philo[i], DIE) == ERROR)
@@ -91,7 +92,6 @@ int	ft_create_philos(t_general *main)
 	main->philo = calloc(sizeof(t_philo), main->nb_of_philo);
 	if (!main->philo)
 		return (ERROR);
-	ft_init_last_meal_time(main);
 	while (i < main->nb_of_philo)
 	{
 		main->philo[i].main = main;
@@ -104,6 +104,7 @@ int	ft_create_philos(t_general *main)
 	main->start_of_simulation = ft_get_current_time();
 	if (main->start_of_simulation == ERROR)
 		return (ERROR);
+	ft_init_last_meal_time(main);
 	if (ft_start_flag_is_true(main) == ERROR)
 		return (ERROR);
 	if (ft_monitor(main) == ERROR)
