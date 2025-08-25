@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:01:15 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 18:49:41 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:09:43 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_think(t_philo *philo)
 		return (ERROR);
 	if (ft_protected_write(philo, THINK) == ERROR)
 		return (ERROR);
-	if (philo->index % 2 == 0)
+	if (philo->index % 2 != 0)
 	{
 		if (ft_check_stop_flag(philo->main) != SUCCESS)
 			return (ERROR);
@@ -34,7 +34,7 @@ int	ft_think(t_philo *philo)
 
 int	ft_sleep(t_philo *philo)
 {
-	t_sleep	sleep;
+	t_time	sleep;
 
 	if (ft_check_stop_flag(philo->main) != SUCCESS)
 		return (ERROR);
@@ -55,7 +55,7 @@ int	ft_sleep(t_philo *philo)
 			break ;
 		if (ft_check_stop_flag(philo->main) != SUCCESS)
 			return (ERROR);
-		if (usleep(ft_min(sleep.time_left, 500)) != SUCCESS)
+		if (usleep(ft_min(sleep.time_left * 1000, 500)) != SUCCESS)
 			return (ERROR);
 	}
 	return (SUCCESS);

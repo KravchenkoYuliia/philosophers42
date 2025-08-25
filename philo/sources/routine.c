@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:29:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 12:26:11 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:36:27 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_init_personal_inf(t_philo *philo)
 {
-	philo->has_eaten_times = 0;
 	if (philo->index == 0)
 	{
 		philo->right_fork = philo->main->nb_of_philo - 1;

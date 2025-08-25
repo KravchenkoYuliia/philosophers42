@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 20:27:56 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 13:55:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ typedef enum e_index {
 	START
 }	t_index;
 
-typedef struct s_sleep {
+typedef struct s_time {
 
 	long long	current_time;
 	long long	time_left;
         long long	deadline;
 
-} t_sleep;
+} t_time;
 
 typedef struct s_philo {
 
@@ -100,6 +100,7 @@ int	ft_protected_write(t_philo *philo, int action);
 /////////////////
 
 int		ft_init(char **av, t_general **main);
+int		ft_time_to_eat(t_philo *philo);
 long long	ft_get_current_time();
 long long	ft_count_time_from_the_start(t_general *main);
 long long	ft_min(long long a, long long b);

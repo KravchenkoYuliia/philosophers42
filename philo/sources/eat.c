@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:47:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 19:13:49 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:06:20 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ int	ft_taking_forks(t_philo *philo, int min, int max)
 		return (ERROR);
 	if (philo->main->nb_of_philo == 1)
 	{
-		//if (ft_one_philo_is_waiting_to_die(philo) == ERROR)
-		//	return (ERROR);
 		if (usleep(philo->main->time_to_die * 1000) != SUCCESS)
 			return (ERROR);
+		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
+		return (ERROR);
+	}
+	if (ft_check_stop_flag(philo->main) != SUCCESS)
+	{
 		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
 		return (ERROR);
 	}
@@ -38,21 +41,33 @@ int	ft_eating_routine(t_philo *philo, int min, int max)
 {
 	if (ft_taking_forks(philo, min, max) == ERROR)
 		return (ERROR);
-	//lock food_status mutex for changing its values
+	if (ft_check_stop_flag(philo->main) != SUCCESS)
+	{
+		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
+		pthread_mutex_unlock(&philo->main->forks_mutex[max]);
+		return (ERROR);
+	}
 	if (pthread_mutex_lock(&philo->main->food_status_mutex) != SUCCESS)
 		return (ERROR);
 	philo->last_meal_time = ft_get_current_time();
 	if (philo->last_meal_time == ERROR)
 		return (ERROR);
+	if (ft_check_stop_flag(philo->main) != SUCCESS)
+	{
+		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
+		pthread_mutex_unlock(&philo->main->forks_mutex[max]);
+		pthread_mutex_unlock(&philo->main->food_status_mutex);
+		return (ERROR);
+	}
 	philo->has_eaten_times++;
 	if (pthread_mutex_unlock(&philo->main->food_status_mutex) != SUCCESS)
 		return (ERROR);
 
-	//unlock food_status mutex after changing its values
-	if (ft_protected_write(philo, EAT) == ERROR)
+	//split time to eat to small parts
+	if (ft_time_to_eat(philo) == ERROR)
 		return (ERROR);
-	if (usleep(philo->main->time_to_eat * 1000) != SUCCESS)
-		return (ERROR);
+	/*if (usleep(philo->main->time_to_eat * 1000) != SUCCESS)
+		return (ERROR);*/
 	if (pthread_mutex_unlock(&philo->main->forks_mutex[min]) != SUCCESS)
 		return (ERROR);
 	if (pthread_mutex_unlock(&philo->main->forks_mutex[max]) != SUCCESS)
@@ -88,6 +103,7 @@ void	ft_init_last_meal_time(t_general *main)
 	while (main->philo && i < main->nb_of_philo)
 	{
 		main->philo[i].already_counted_not_hungry = false;
+		main->philo[i].has_eaten_times = 0;
 		main->philo[i].last_meal_time = main->start_of_simulation;
 		i++;
 	}
