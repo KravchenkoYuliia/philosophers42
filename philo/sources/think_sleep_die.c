@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:01:15 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 16:58:18 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 18:51:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 int	ft_think(t_philo *philo)
 {
-	if (ft_check_stop_flag(philo->main) != SUCCESS)
-		return (ERROR);
 	if (ft_protected_write(philo, THINK) == ERROR)
 		return (ERROR);
 	if (philo->main->nb_of_philo % 2 == 1)
 	{
 		if (ft_check_stop_flag(philo->main) != SUCCESS)
 			return (ERROR);
-		
 		t_time	think;
 		think.current_time = ft_get_current_time();
-		think.deadline = think.current_time + ((philo->main->time_to_eat * 2) - philo->main->time_to_sleep);
+		think.deadline = think.current_time + ((philo->main->time_to_eat * 2)
+				- philo->main->time_to_sleep);
 		think.time_left = SIGNED_LONG_LONG;
 		while (think.time_left > 0)
 		{

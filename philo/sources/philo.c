@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 17:45:21 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:02:05 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,13 @@ int	ft_waiting_for_threads(t_general *main)
 {
 	int	i;
 
-	usleep(10000);
+	if (usleep(10000) != SUCCESS)
+		return (ERROR);
 	i = 0;
 	while (i < main->nb_of_philo)
 	{
-		if (pthread_join(main->philo[i].threads_id, NULL) != SUCCESS) {
+		if (pthread_join(main->philo[i].threads_id, NULL) != SUCCESS)
 			return (ERROR);
-		}
-
-		// printf("MONITOR %d\n", i + 1);
 		i++;
 	}
 	return (SUCCESS);
@@ -72,19 +70,8 @@ int	ft_create_philos(t_general *main)
 			return (ERROR);
 		i++;
 	}
-	main->start_of_simulation = ft_get_current_time();
-	if (main->start_of_simulation == ERROR)
+	if (ft_start_of_simulation(main) == ERROR)
 		return (ERROR);
-	ft_init_last_meal_time(main);
-	if (ft_start_flag_is_true(main) == ERROR)
-		return (ERROR);
-	if (ft_monitor(main) == ERROR) {
-		return (ERROR);
-	}
-	if (ft_waiting_for_threads(main) == ERROR)
-		return (ERROR);
-	if (pthread_mutex_unlock(&main->write_mutex) != SUCCESS)
-                        return (ERROR);
 	return (SUCCESS);
 }
 
@@ -107,10 +94,9 @@ int	ft_init(char **av, t_general **main)
 		return (ERROR);
 	(*main)->start = false;
 	if (ft_create_philos(*main) == ERROR)
-	{
-		//ft_destroy_all_mutex(*main);
 		return (ERROR);
-	}
-	//ft_destroy_all_mutex(*main);
+	free((*main)->forks_mutex);
+	free((*main)->philo);
+	free(*main);
 	return (SUCCESS);
 }

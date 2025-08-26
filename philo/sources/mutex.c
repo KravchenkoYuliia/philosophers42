@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:14:10 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 14:46:24 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 18:49:54 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ft_write_mutex(t_general *main)
 	{
 		free(main->philo);
 		free(main);
-		//stop the threads;
 		return (ERROR);
 	}
 	return (SUCCESS);
@@ -38,9 +37,6 @@ int	ft_forks_mutex(t_general *main)
 		{
 			free(main->philo);
 			free(main);
-			//stop the threads;
-			pthread_mutex_destroy(&main->write_mutex);
-			//destroy all mutex before i
 			return (ERROR);
 		}
 		i++;
@@ -54,9 +50,7 @@ int	ft_food_status_mutex(t_general *main)
 	{
 		free(main->philo);
 		free(main);
-		//stop the threads;
 		pthread_mutex_destroy(&main->write_mutex);
-		//destroy all forks mutex
 		return (ERROR);
 	}
 	return (SUCCESS);
@@ -68,10 +62,8 @@ int	ft_stop_flag_mutex(t_general *main)
 	{
 		free(main->philo);
 		free(main);
-		//ft_check_stop_flag(philo->main);
 		pthread_mutex_destroy(&main->write_mutex);
 		pthread_mutex_destroy(&main->food_status_mutex);
-		//destroy all forks mutex
 		return (ERROR);
 	}
 	return (SUCCESS);

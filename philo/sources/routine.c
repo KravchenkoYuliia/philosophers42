@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:29:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 17:12:17 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:00:13 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ void	ft_init_personal_inf(t_philo *philo)
 void	ft_philos_loop(t_philo *philo)
 {
 	if (philo->index % 2 == 1)
-        {
-                if (usleep(philo->main->nb_of_philo * 30) != SUCCESS)
+	{
+		if (usleep(philo->main->nb_of_philo * 30) != SUCCESS)
 			return ;
-
-        }
+	}
 	while (1)
 	{
 		if (ft_check_stop_flag(philo->main) != SUCCESS)
@@ -68,4 +67,21 @@ void	*ft_routine(void *data)
 		return (NULL);
 	ft_philos_loop(philo);
 	return (NULL);
+}
+
+int	ft_start_of_simulation(t_general *main)
+{
+	main->start_of_simulation = ft_get_current_time();
+	if (main->start_of_simulation == ERROR)
+		return (ERROR);
+	ft_init_last_meal_time(main);
+	if (ft_start_flag_is_true(main) == ERROR)
+		return (ERROR);
+	if (ft_monitor(main) == ERROR)
+		return (ERROR);
+	if (ft_waiting_for_threads(main) == ERROR)
+		return (ERROR);
+	if (pthread_mutex_unlock(&main->write_mutex) != SUCCESS)
+		return (ERROR);
+	return (SUCCESS);
 }

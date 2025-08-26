@@ -6,26 +6,25 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:34:45 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 14:29:44 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:01:48 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	ft_get_current_time()
+long long	ft_get_current_time(void)
 {
-	struct timeval time;
+	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) != SUCCESS)
 		return (ERROR);
 	return ((long long)time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-
 long long	ft_count_time_from_the_start(t_general *main)
 {
-	long long	current_time;
-	long long	result;
+	long long		current_time;
+	long long		result;
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) != SUCCESS)
