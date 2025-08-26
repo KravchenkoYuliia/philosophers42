@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:29:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 16:58:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:12:17 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,5 @@ void	*ft_routine(void *data)
 	if (ft_check_stop_flag(philo->main) != SUCCESS)
 		return (NULL);
 	ft_philos_loop(philo);
-
-	// printf("PHILO %d\n", philo->index + 1);
 	return (NULL);
 }

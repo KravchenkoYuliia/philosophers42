@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 15:58:34 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:45:21 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	ft_create_philos(t_general *main)
 	}
 	if (ft_waiting_for_threads(main) == ERROR)
 		return (ERROR);
+	if (pthread_mutex_unlock(&main->write_mutex) != SUCCESS)
+                        return (ERROR);
 	return (SUCCESS);
 }
 

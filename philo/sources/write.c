@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:39:25 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 16:43:07 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:44:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int	ft_protected_write(t_philo *philo, int action)
 	if (pthread_mutex_lock(&philo->main->write_mutex) != SUCCESS)
 		return (ERROR);
 	printf("%lld %d %s\n", timestamp, philo->index + 1, write_it);
-	if (pthread_mutex_unlock(&philo->main->write_mutex) != SUCCESS)
-		return (ERROR);
+	if (action != DIE)
+	{
+		if (pthread_mutex_unlock(&philo->main->write_mutex) != SUCCESS)
+			return (ERROR);
+	}
 	return (SUCCESS);
 }
