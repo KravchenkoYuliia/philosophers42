@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_checking.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:12:15 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/19 19:22:40 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:14:32 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_isdigit(int ac, char **av)
 		i = 0;
 		while (av[arg][i])
 		{
-			if(!(av[arg][i] >= '0' && av[arg][i] <= '9'))
+			if (!(av[arg][i] >= '0' && av[arg][i] <= '9'))
 			{
 				return (ERROR);
 			}
@@ -54,7 +54,7 @@ int	ft_av1_check(char *av1)
 
 int	ft_av2_av3_av4_check(char **av)
 {
-	int		i;
+	int				i;
 	unsigned long	temp;
 
 	i = 2;

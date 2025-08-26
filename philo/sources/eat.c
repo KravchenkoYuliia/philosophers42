@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:47:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 15:15:48 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:43:31 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,10 @@ int	ft_taking_forks(t_philo *philo, int min, int max)
 		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
 		return (ERROR);
 	}
-	if (philo->main->nb_of_philo == 1)
-	{
-		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
-		if (usleep(philo->main->time_to_die * 1000) != SUCCESS)
-			return (ERROR);
+	if (ft_if_one_philo(philo->main, min) == true)
 		return (ERROR);
-	}
-	if (ft_check_stop_flag(philo->main) != SUCCESS)
-	{
-		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
-		return (ERROR);
-	}
-	if (pthread_mutex_lock(&philo->main->forks_mutex[max]) != SUCCESS)
+	if (ft_check_stop_flag(philo->main) != SUCCESS
+		|| pthread_mutex_lock(&philo->main->forks_mutex[max]) != SUCCESS)
 	{
 		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
 		return (ERROR);
@@ -50,42 +41,14 @@ int	ft_taking_forks(t_philo *philo, int min, int max)
 int	ft_eating_routine(t_philo *philo, int min, int max)
 {
 	if (ft_taking_forks(philo, min, max) == ERROR)
-	{
-		//pthread_mutex_unlock(&philo->main->forks_mutex[min]);
-		//pthread_mutex_unlock(&philo->main->forks_mutex[max]);
 		return (ERROR);
-	}
-	if (pthread_mutex_lock(&philo->main->food_status_mutex) != SUCCESS)
+	if (ft_change_last_meal_time(philo) == ERROR)
 	{
 		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
 		pthread_mutex_unlock(&philo->main->forks_mutex[max]);
 		return (ERROR);
 	}
-	philo->last_meal_time = ft_get_current_time();
-	pthread_mutex_unlock(&philo->main->food_status_mutex);
-	if (philo->last_meal_time == ERROR)
-	{
-		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
-		pthread_mutex_unlock(&philo->main->forks_mutex[max]);
-		// pthread_mutex_unlock(&philo->main->food_status_mutex);
-		return (ERROR);
-	}
-	if (ft_check_stop_flag(philo->main) != SUCCESS)
-	{
-		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
-		pthread_mutex_unlock(&philo->main->forks_mutex[max]);
-		// pthread_mutex_unlock(&philo->main->food_status_mutex);
-		return (ERROR);
-	}
-	pthread_mutex_lock(&philo->main->food_status_mutex);
-	philo->has_eaten_times++;
-	if (pthread_mutex_unlock(&philo->main->food_status_mutex) != SUCCESS)
-	{
-		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
-		pthread_mutex_unlock(&philo->main->forks_mutex[max]);
-		return (ERROR);
-	}
-	if (ft_time_to_eat(philo) == ERROR)
+	if (ft_change_has_eaten_times(philo) == ERROR)
 	{
 		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
 		pthread_mutex_unlock(&philo->main->forks_mutex[max]);

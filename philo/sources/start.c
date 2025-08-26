@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 20:12:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 15:02:41 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:04:07 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ int	ft_init_start_mutex(t_general *main)
 	{
 		free(main->philo);
 		free(main);
-		//stop the threads;
-		pthread_mutex_destroy(&main->write_mutex);
-		pthread_mutex_destroy(&main->food_status_mutex);
-		pthread_mutex_destroy(&main->stop_mutex);
-		//destroy all forks mutex
 		return (ERROR);
 	}
 	return (SUCCESS);

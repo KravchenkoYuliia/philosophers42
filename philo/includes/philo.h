@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 19:03:04 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:43:03 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,8 @@ int					ft_monitor_checking(t_general *main, long long current_time, int i);
 int					ft_start_of_simulation(t_general *main);
 int					ft_monitor(t_general *main);
 int					ft_waiting_for_threads(t_general *main);
+int					ft_change_last_meal_time(t_philo *philo);
+bool				ft_if_one_philo(t_general *main, int min);
+int					ft_change_has_eaten_times(t_philo *philo);
 
 #endif

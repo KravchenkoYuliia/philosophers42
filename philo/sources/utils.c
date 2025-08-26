@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:35:39 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 18:59:06 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:12:08 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ long long	ft_min(long long a, long long b)
 int	ft_quit(t_general *main, int i, int type)
 {
 	if (pthread_mutex_unlock(&main->food_status_mutex) != SUCCESS)
-	return (ERROR);
+		return (ERROR);
 	if (ft_stop_flag_is_true(main) == ERROR)
 		return (ERROR);
 	if (type == DIE)
@@ -58,7 +58,6 @@ int	ft_quit(t_general *main, int i, int type)
 			return (ERROR);
 	}
 	return (SUCCESS);
-
 }
 
 int	ft_monitor_checking(t_general *main, long long current_time, int i)
@@ -68,7 +67,7 @@ int	ft_monitor_checking(t_general *main, long long current_time, int i)
 	if (pthread_mutex_lock(&main->food_status_mutex) != SUCCESS)
 		return (ERROR);
 	if ((current_time - main->philo[i].last_meal_time)
-			>= main->time_to_die)
+		>= main->time_to_die)
 	{
 		result = ft_quit(main, i, DIE);
 		return (result);
