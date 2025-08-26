@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 17:14:10 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/24 20:19:24 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 14:46:24 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_stop_flag_mutex(t_general *main)
 	{
 		free(main->philo);
 		free(main);
-		//stop the threads;
+		//ft_check_stop_flag(philo->main);
 		pthread_mutex_destroy(&main->write_mutex);
 		pthread_mutex_destroy(&main->food_status_mutex);
 		//destroy all forks mutex

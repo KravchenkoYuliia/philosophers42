@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:25:37 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 18:55:28 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:18:37 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int					ft_check_stop_flag(t_general *main);
 int					ft_check_start_flag(t_general *main);
 int					ft_stop_flag_is_true(t_general *main);
 int					ft_start_flag_is_true(t_general *main);
+int					ft_first_think(t_philo *philo);
 int					ft_think(t_philo *philo);
 int					ft_eat(t_philo *philo);
 int					ft_sleep(t_philo *philo);

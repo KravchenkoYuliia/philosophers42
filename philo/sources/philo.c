@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:25:06 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 14:26:45 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:58:34 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	ft_monitor(t_general *main)
 			return (ERROR);
 		while (i < main->nb_of_philo)
 		{
-			if (ft_monitor_checking(main, current_time, i) == ERROR)
+			if (ft_check_stop_flag(main) == STOP)
+				return (SUCCESS);
+			if (ft_monitor_checking(main, current_time, i))
 				return (ERROR);
 			i++;
 		}
@@ -43,8 +45,11 @@ int	ft_waiting_for_threads(t_general *main)
 	i = 0;
 	while (i < main->nb_of_philo)
 	{
-		if (pthread_join(main->philo[i].threads_id, NULL) != SUCCESS)
+		if (pthread_join(main->philo[i].threads_id, NULL) != SUCCESS) {
 			return (ERROR);
+		}
+
+		// printf("MONITOR %d\n", i + 1);
 		i++;
 	}
 	return (SUCCESS);
@@ -71,8 +76,11 @@ int	ft_create_philos(t_general *main)
 	if (main->start_of_simulation == ERROR)
 		return (ERROR);
 	ft_init_last_meal_time(main);
-	if (ft_start_flag_is_true(main) == ERROR || ft_monitor(main) == ERROR)
+	if (ft_start_flag_is_true(main) == ERROR)
 		return (ERROR);
+	if (ft_monitor(main) == ERROR) {
+		return (ERROR);
+	}
 	if (ft_waiting_for_threads(main) == ERROR)
 		return (ERROR);
 	return (SUCCESS);

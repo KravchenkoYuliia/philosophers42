@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:35:39 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/26 14:34:46 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:42:18 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ long long	ft_min(long long a, long long b)
 int	ft_quit(t_general *main, int i, int type)
 {
 	if (pthread_mutex_unlock(&main->food_status_mutex) != SUCCESS)
+	return (ERROR);
+	if (ft_stop_flag_is_true(main) == ERROR)
 		return (ERROR);
 	if (type == DIE)
 	{
 		if (ft_protected_write(&main->philo[i], DIE) == ERROR)
 			return (ERROR);
 	}
-	if (ft_stop_flag_is_true(main) == ERROR)
-		return (ERROR);
 	//if (ft_protected_write(&main->philo[i], STOP) == ERROR)
 	//	return (ERROR);
 	return (SUCCESS);
@@ -73,14 +73,14 @@ int	ft_monitor_checking(t_general *main, long long current_time, int i)
 			>= main->time_to_die)
 	{
 		result = ft_quit(main, i, DIE);
-		pthread_mutex_unlock(&main->food_status_mutex);
+		//	pthread_mutex_unlock(&main->food_status_mutex);	
 		return (result);
 	}
 	if (main->must_to_eat != NOT_SPECIFIED
 			&& ft_not_hungry(main, &main->philo[i]) == true)
 	{
 		result = ft_quit(main, i, STOP);
-		pthread_mutex_unlock(&main->food_status_mutex);
+		//	pthread_mutex_unlock(&main->food_status_mutex);
 		return (result);
 	}
 	if (pthread_mutex_unlock(&main->food_status_mutex) != SUCCESS)

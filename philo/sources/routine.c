@@ -6,7 +6,7 @@
 /*   By: yukravch <yukravch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 14:29:31 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 19:07:17 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:58:04 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ void	ft_init_personal_inf(t_philo *philo)
 
 void	ft_philos_loop(t_philo *philo)
 {
+	if (philo->index % 2 == 1)
+        {
+                if (usleep(philo->main->nb_of_philo * 30) != SUCCESS)
+			return ;
+
+        }
 	while (1)
 	{
-		if (ft_think(philo) == ERROR)
-			return ;
-		if (ft_check_stop_flag(philo->main) != SUCCESS)
-			return ;
 		if (ft_check_stop_flag(philo->main) != SUCCESS)
 			return ;
 		if (ft_eat(philo) == ERROR)
@@ -43,6 +45,8 @@ void	ft_philos_loop(t_philo *philo)
 		if (ft_sleep(philo) == ERROR)
 			return ;
 		if (ft_check_stop_flag(philo->main) != SUCCESS)
+			return ;
+		if (ft_think(philo) == ERROR)
 			return ;
 	}
 }
@@ -63,5 +67,7 @@ void	*ft_routine(void *data)
 	if (ft_check_stop_flag(philo->main) != SUCCESS)
 		return (NULL);
 	ft_philos_loop(philo);
+
+	// printf("PHILO %d\n", philo->index + 1);
 	return (NULL);
 }
