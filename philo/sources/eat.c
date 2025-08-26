@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:47:18 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 16:54:35 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 14:31:36 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	ft_taking_forks(t_philo *philo, int min, int max)
 	}
 	if (philo->main->nb_of_philo == 1)
 	{
+		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
 		if (usleep(philo->main->time_to_die * 1000) != SUCCESS)
 			return (ERROR);
-		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
 		return (ERROR);
 	}
 	if (ft_check_stop_flag(philo->main) != SUCCESS)
@@ -52,7 +52,11 @@ int	ft_eating_routine(t_philo *philo, int min, int max)
 	if (ft_check_stop_flag(philo->main) != SUCCESS)
 		return (ERROR);
 	if (ft_taking_forks(philo, min, max) == ERROR)
+	{
+		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
+		pthread_mutex_unlock(&philo->main->forks_mutex[max]);
 		return (ERROR);
+	}
 	if (pthread_mutex_lock(&philo->main->food_status_mutex) != SUCCESS)
 	{
 		pthread_mutex_unlock(&philo->main->forks_mutex[min]);
@@ -88,7 +92,10 @@ int	ft_eating_routine(t_philo *philo, int min, int max)
 		return (ERROR);
 	}
 	if (pthread_mutex_unlock(&philo->main->forks_mutex[min]) != SUCCESS)
+	{
+		pthread_mutex_unlock(&philo->main->forks_mutex[max]);
 		return (ERROR);
+	}
 	if (pthread_mutex_unlock(&philo->main->forks_mutex[max]) != SUCCESS)
 		return (ERROR);
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: yukravch <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:35:39 by yukravch          #+#    #+#             */
-/*   Updated: 2025/08/25 19:00:50 by yukravch         ###   ########.fr       */
+/*   Updated: 2025/08/26 14:34:46 by yukravch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	ft_quit(t_general *main, int i, int type)
 	}
 	if (ft_stop_flag_is_true(main) == ERROR)
 		return (ERROR);
-	if (ft_protected_write(&main->philo[i], STOP) == ERROR)
-		return (ERROR);
+	//if (ft_protected_write(&main->philo[i], STOP) == ERROR)
+	//	return (ERROR);
 	return (SUCCESS);
 
 }
@@ -73,12 +73,14 @@ int	ft_monitor_checking(t_general *main, long long current_time, int i)
 			>= main->time_to_die)
 	{
 		result = ft_quit(main, i, DIE);
+		pthread_mutex_unlock(&main->food_status_mutex);
 		return (result);
 	}
 	if (main->must_to_eat != NOT_SPECIFIED
 			&& ft_not_hungry(main, &main->philo[i]) == true)
 	{
 		result = ft_quit(main, i, STOP);
+		pthread_mutex_unlock(&main->food_status_mutex);
 		return (result);
 	}
 	if (pthread_mutex_unlock(&main->food_status_mutex) != SUCCESS)
